@@ -1,0 +1,17 @@
+{
+  "name": "discore",
+  "version": "1.0.0",
+  "description": "Dicso cursed",
+  "scripts": {
+    "dev": "roll dev",
+    "build": "roll build"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "three": "^0.146.0"
+  },
+  "devDependencies": {
+    "@tangible/roller": "^1.2.1"
+  }
+}
