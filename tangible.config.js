@@ -27,14 +27,14 @@ module.exports = {
     // Example
 
     {
-      src: './example/assets/src/index.js',
-      dest: './example/assets/build/app.min.js',
-      watch: './example/assets/src/**',
+      src: './docs/assets/src/index.js',
+      dest: './docs/assets/build/app.min.js',
+      watch: './docs/assets/src/**',
       react: 'react'
     }
 
   ],
   serve: {
-    dir: './example/'
+    dir: './docs/'
   }
 }
