@@ -11,13 +11,13 @@ const loadAnimations = (app, character) => {
       animation =>  {
         // Bad, should not use app here
         app.characters.main.animations[ name ] = character.mixer.clipAction(animation.animations[0]) 
-        if( name === 'idle' ) app.characters.main.startAnimaion('idle')
+        if( name === 'idle' ) app.characters.main.startAnimation('idle')
       }
     )
   }
 
-  character.startAnimaion = animation => start(character.animations ?? [], animation)
-  character.stopAnimaion = animation => stop(character.animations ?? [], animation)
+  character.startAnimation = animation => start(character.animations ?? [], animation)
+  character.stopAnimation = animation => stop(character.animations ?? [], animation)
   
   return character
 }

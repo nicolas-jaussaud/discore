@@ -7,7 +7,7 @@ const render = (app, renderer) => {
 
   app.hooks.doAction('beforeRender')
 
-  setTimeout(() => requestAnimationFrame(app.render), 1000 / 24 )
+  requestAnimationFrame(app.render)
 
   /**
    * Make sure the camera follows the main character 

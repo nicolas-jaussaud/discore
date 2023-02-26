@@ -31,10 +31,13 @@ const init = () => {
     animations : {
       run : folder + '/animations/run.fbx', 
       idle: folder + '/animations/idle.fbx' 
+    },
+    attributes : {
+      speed: 0.5
     }
   }, character => {
     character.object.scale.set(0.5, 0.5, 0.5)
-    character.object.rotateX(Math.PI / 2)
+    character.object.rotation.x = Math.PI / 2
   })
 
   sideLight.position.set(-7000000, 10000000, 100)

@@ -8,6 +8,11 @@ const setMainCharacter = (app, character, callback) => {
     character.object = object
     character = loadAnimations(app, character)
 
+    character.attributes = {
+      speed: 0.3,
+      ...(character.attributes ?? {})
+    }
+
     app.scene.add(object)
     app.characters.main = character
 
