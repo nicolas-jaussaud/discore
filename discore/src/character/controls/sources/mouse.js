@@ -27,8 +27,8 @@ const mouseEvents = app => {
     raycaster.setFromCamera(mouse, app.camera)
     const intersects = raycaster.intersectObjects(app.scene.children)
     
-    if( intersects.length <= 0 ) return;
-    
+    if( ! isWalkable(intersects[0] ?? false) ) return;
+
     app.controls.actions.run.move(
       intersects[0].point.x,
       intersects[0].point.y,
@@ -36,6 +36,19 @@ const mouseEvents = app => {
     )
 
   })
+}
+
+/**
+ * Check if the clicked object is walkable
+ */
+const isWalkable = intersect => {
+
+  if( ! intersect || ! intersect.object ) return false
+  if( intersect.object.walkable === true ) return true
+
+  return intersect.object.parent
+    ? (intersect.object.parent?.walkable === true)
+    : false
 }
 
 export {
