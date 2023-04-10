@@ -3,10 +3,11 @@ const load = (app, map) => {
 
     const squareType = app.map.squareTypes[ square.type ]
     const coordinates = square.coordinates
-    
+
     squareType.render({
       coordinates: coordinates,
-      app: app 
+      app: app, 
+      config: square.config ?? {}
     })
   })  
 }
