@@ -26,10 +26,6 @@ const init = ({
     1000
   )
 
-  camera.position.set( 0, 0, 200 )
-  camera.rotateZ(Math.PI / 4)
-  camera.rotateX(Math.PI / 4)
-    
   const scene = new Scene()
   scene.add( camera )
 
@@ -47,8 +43,26 @@ const init = ({
     map: {
       squareTypes: []
     },
-    clock: new Clock()
+    clock: new Clock(),
+    view: {
+      set: view => {
+        app.view.current = view
+        app.camera.rotation.set(0,0,0) // Reset
+        switch(view) {
+          case 'top':
+            app.camera.rotateZ(Math.PI / 4)
+            break
+          case 'orthographic':
+            app.camera.rotateZ(Math.PI / 4)
+            app.camera.rotateX(Math.PI / 4)
+            break
+        }
+      }
+    }
   }
+  
+  camera.position.set( 0, 0, 400 )
+  app.view.set('orthographic')
 
   app.render = () => render(app, renderer)
   app.render()

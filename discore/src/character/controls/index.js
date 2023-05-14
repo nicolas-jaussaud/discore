@@ -1,9 +1,11 @@
 import { mouseEvents } from './sources/mouse'
+import { keyboardEvents } from './sources/keyboard'
 import { Vector3 } from 'three'
 
 const init = app => ({
   sources: {
-    mouse: mouseEvents(app)
+    mouse: mouseEvents(app),
+    keyboard: keyboardEvents(app) 
   },
   actions: {
     run: {

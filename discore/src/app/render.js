@@ -1,4 +1,3 @@
-import { Euler } from 'three' 
 import { debug } from './debug'
 
 const render = (app, renderer) => {
@@ -16,9 +15,15 @@ const render = (app, renderer) => {
 
     const character = app.characters.main.object.position
     const camera = app.camera
-    
-    camera.position.x = character.x + 300
-    camera.position.y = character.y - 300
+
+    if( app.view.current === 'orthographic' ) {
+      camera.position.x = character.x + 200
+      camera.position.y = character.y - 200
+    }
+    else if( app.view.current === 'top' ) {
+      camera.position.x = character.x
+      camera.position.y = character.y
+    }
   }
   
   /**
