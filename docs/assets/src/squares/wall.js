@@ -9,6 +9,7 @@ const renderWall = ({
   config
 }) => {
   
+  console.log(config)
   /**
    * @see ./floor.js
    */
@@ -16,15 +17,23 @@ const renderWall = ({
     coordinates, 
     app,
     config: { 
-      type: config.position.includes('corner') ? 'corner' : 'side',
+      type: config?.floor?.type ?? (
+        config.position.includes('corner') 
+          ? 'corner' 
+          : 'side'),
       position: config.position 
     }
   })
 
+  if( config.column ) {
+    renderColumn(config.column, coordinates)
+  }
+  
   /**
    * We don't render wall on bottom
    */
   if( config.position.startsWith('bottom-') ) return;
+  if( config.renderWall === false ) return;
 
   discore.world.add(
     `./assets/ressources/world/walls/wall-${config.type}.fbx`,
@@ -52,10 +61,6 @@ const renderWall = ({
       }
     
       app.scene.add(wall)
-
-      if( config.column ) {
-        renderColumn(config.column, coordinates)
-      }    
     }
   )
 }

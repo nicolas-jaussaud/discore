@@ -1,4 +1,7 @@
 const map = [
+
+  // Center square
+
   // Center
   { 
     type: 'floor',
@@ -35,7 +38,7 @@ const map = [
     },
     config: {
       position: 'top-left',
-      type: 2,
+      type: 3,
     }
   },
   // Left corner
@@ -63,7 +66,7 @@ const map = [
     },
     config: {
       position: 'top-right',
-      type: 5,
+      type: 3,
     }
   },
   // Right corner
@@ -76,9 +79,10 @@ const map = [
     config: {
       position: 'right-corner',
       type: 1,
+      renderWall: false,
       column: {
         type: 3,
-        position: 'right-corner'
+        position: 'top-corner'
       }
     }
   },
@@ -116,6 +120,66 @@ const map = [
       position: 'bottom-left',
     }
   },
+
+  // Bottom left hall
+  { 
+    type: 'wall',
+    coordinates: { 
+      x: [ -300, -100 ], 
+      y: [ -500, -300 ]
+    },
+    config: {
+      position: 'top-left',
+      type: 5,
+      floor: {
+        type: 2
+      }
+    }
+  },
+  { 
+    type: 'wall',
+    coordinates: { 
+      x: [ -300, -100 ], 
+      y: [ -700, -500 ]
+    },
+    config: {
+      position: 'top-left',
+      type: 5,
+      floor: {
+        type: 2
+      }
+    }
+  },
+
+  // Top right hall
+  { 
+    type: 'wall',
+    coordinates: { 
+      x: [ 100, 300 ], 
+      y: [ 300, 500 ]
+    },
+    config: {
+      position: 'top-left',
+      type: 5,
+      floor: {
+        type: 2
+      }
+    }
+  },
+  { 
+    type: 'wall',
+    coordinates: { 
+      x: [ 100, 300 ], 
+      y: [ 500, 700 ]
+    },
+    config: {
+      position: 'top-left',
+      type: 5,
+      floor: {
+        type: 2
+      },
+    }
+  }
 ]
 
 export { map }
