@@ -26,29 +26,35 @@ const mouseEvents = app => {
      */
     raycaster.setFromCamera(mouse, app.camera)
     const intersects = raycaster.intersectObjects(app.scene.children)
-    
-    if( ! isWalkable(intersects[0] ?? false) ) return;
+
+    if( ! isWalkable(intersects[0] ?? false, app) ) return;
 
     app.controls.actions.run.move(
       intersects[0].point.x,
       intersects[0].point.y,
       intersects[0].point.z
     )
-
   })
 }
 
 /**
  * Check if the clicked object is walkable
  */
-const isWalkable = intersect => {
+const isWalkable = (intersect, app) => {
 
-  if( ! intersect || ! intersect.object ) return false
-  if( intersect.object.walkable === true ) return true
+  if( ! intersect || ! intersect.point ) return false
 
-  return intersect.object.parent
-    ? (intersect.object.parent?.walkable === true)
-    : false
+  if( intersect.object.walkable === false || intersect.object.parent.walkable === false ) {
+    return false
+  }
+  
+  const square = app.map.getSquareByCoordinates(intersect.point)
+  
+  if( ! square ) return false
+
+  const squareType = app.map.getSquareType(square.type ?? false)
+
+  return squareType ? squareType.walkable : false
 }
 
 export {

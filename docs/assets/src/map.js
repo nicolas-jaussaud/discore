@@ -1,185 +1,46 @@
-const map = [
+const map = {
 
-  // Center square
+  '2|0': { type: 'grass' },
+  '1|0': { type: 'grass' },
+  '0|0': { type: 'path' },
+  '-1|0': { type: 'grass' },
+  '-2|0': { type: 'grass' },
 
-  // Center
-  { 
-    type: 'floor',
-    coordinates: { 
-      x: [ -100, 100 ], 
-      y: [ -100, 100 ]
-    },
-    config: {
-      type: 'empty',
-    }
-  },
-  // Top corner
-  { 
-    type: 'wall',
-    coordinates: { 
-      x: [ -300, -100 ], 
-      y: [ 100, 300 ]
-    },
-    config: {
-      position: 'top-corner',
-      type: 1,
-      column: {
-        type: 3,
-        position: 'top-corner'
-      }
-    }
-  },
-  // Top left
-  { 
-    type: 'wall',
-    coordinates: { 
-      x: [ -300, -100 ], 
-      y: [ -100, 100 ]
-    },
-    config: {
-      position: 'top-left',
-      type: 3,
-    }
-  },
-  // Left corner
-  { 
-    type: 'wall',
-    coordinates: { 
-      x: [ -300, -100 ], 
-      y: [ -300, -100 ]
-    },
-    config: {
-      position: 'left-corner',
-      type: 1,
-      column: {
-        type: 3,
-        position: 'left-corner'
-      }
-    }
-  },
-  // Top right
-  { 
-    type: 'wall',
-    coordinates: { 
-      x: [ -100, 100 ], 
-      y: [ 100, 300 ]
-    },
-    config: {
-      position: 'top-right',
-      type: 3,
-    }
-  },
-  // Right corner
-  { 
-    type: 'wall',
-    coordinates: { 
-      x: [ 100, 300 ], 
-      y: [ 100, 300 ]
-    },
-    config: {
-      position: 'right-corner',
-      type: 1,
-      renderWall: false,
-      column: {
-        type: 3,
-        position: 'top-corner'
-      }
-    }
-  },
-  // Bottom right
-  { 
-    type: 'wall',
-    coordinates: { 
-      x: [ 100, 300 ], 
-      y: [ -100, 100 ]
-    },
-    config: {
-      position: 'bottom-right',
-      type: 5,
-    }
-  },
-  // Bottom corner
-  { 
-    type: 'wall',
-    coordinates: { 
-      x: [ 100, 300 ], 
-      y: [ -300, -100 ]
-    },
-    config: {
-      position: 'bottom-corner',
-    }
-  },
-  // Bottom left
-  { 
-    type: 'wall',
-    coordinates: { 
-      x: [ -100, 100 ], 
-      y: [ -300, -100 ]
-    },
-    config: {
-      position: 'bottom-left',
-    }
-  },
+  '-2|1': { type: 'grass' },
+  '-1|1': { type: 'grass' },
+  '0|1': { type: 'path' },
+  '1|1': { type: 'tree', config: { type: 1 } },
+  '2|1': { type: 'grass' },
 
-  // Bottom left hall
-  { 
-    type: 'wall',
-    coordinates: { 
-      x: [ -300, -100 ], 
-      y: [ -500, -300 ]
-    },
-    config: {
-      position: 'top-left',
-      type: 5,
-      floor: {
-        type: 2
-      }
-    }
-  },
-  { 
-    type: 'wall',
-    coordinates: { 
-      x: [ -300, -100 ], 
-      y: [ -700, -500 ]
-    },
-    config: {
-      position: 'top-left',
-      type: 5,
-      floor: {
-        type: 2
-      }
-    }
-  },
+  '-2|-1': { type: 'grass' },
+  '-1|-1': { type: 'tree', config: { type: 2 } },
+  '0|-1': { type: 'path' },
+  '1|-1': { type: 'grass' },
+  '2|-1': { type: 'tree', config: { type: 3 } },
 
-  // Top right hall
-  { 
-    type: 'wall',
-    coordinates: { 
-      x: [ 100, 300 ], 
-      y: [ 300, 500 ]
-    },
-    config: {
-      position: 'top-left',
-      type: 5,
-      floor: {
-        type: 2
-      }
-    }
-  },
-  { 
-    type: 'wall',
-    coordinates: { 
-      x: [ 100, 300 ], 
-      y: [ 500, 700 ]
-    },
-    config: {
-      position: 'top-left',
-      type: 5,
-      floor: {
-        type: 2
-      },
-    }
-  }
-]
+  '2|-2': { type: 'water' },
+  '1|-2': { type: 'water' },
+  '0|-2': { type: 'path' },
+  '-1|-2': { type: 'water' },
+  '-2|-2': { type: 'water' },
+
+  '0|-3': { type: 'path' },
+  '2|-3': { type: 'grass' },
+  '1|-3': { type: 'tree', config: { type: 1 } },
+  '-1|-3': { type: 'grass' },
+  '-2|-3': { type: 'grass' },
+
+  '0|-4': { type: 'path' },
+  '1|-4': { type: 'grass' },
+  '2|-4': { type: 'grass' },
+  '-1|-4': { type: 'tree', config: { type: 2 } },
+  '-2|-4': { type: 'grass' },
+
+  '0|-5': { type: 'path' },
+  '1|-5': { type: 'grass' },
+  '2|-5': { type: 'grass' },
+  '-1|-5': { type: 'grass' },
+  '-2|-5': { type: 'grass' },
+}
 
 export { map }

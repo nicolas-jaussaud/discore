@@ -49,7 +49,7 @@ const move = (app, coordinates) => {
      * We use this vector to check if we should move the character to the next position, before
      * actually moving it
      * 
-     * We use distance * 2 for this check by security, because we want to avoid being in a situation where 
+     * We use distance * 3 for this check by security, because we want to avoid being in a situation where 
      * the character is at the absolute edge of the map (it can be hard to move back from there)
      */
     const distanceCheck = new Vector3(
@@ -57,12 +57,24 @@ const move = (app, coordinates) => {
       character.position.y,
       character.position.z
     )
-    distanceCheck.add( direction.clone().multiplyScalar(distance * 2) )
+    distanceCheck.add( direction.clone().multiplyScalar(distance * 3) )
 
-    if( app.map.getByCoordinates(distanceCheck) === false ) {
+    const nextSquare = app.map.getSquareByCoordinates(distanceCheck)
+    if( nextSquare === false ) {
       animations.stop()
       return;
-    } 
+    }
+
+    const squareType = app.map.getSquareType(nextSquare.type ?? false)  
+    if( ! squareType || squareType.walkable === false ) {
+      animations.stop()
+      return;
+    }
+
+    if( app.world.hasCollisions(distanceCheck) ) {
+      animations.stop()
+      return;
+    }
 
     character.position.add( direction.multiplyScalar(distance) )
     character.lookAt(targetPosition)

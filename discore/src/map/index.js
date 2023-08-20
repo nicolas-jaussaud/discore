@@ -1,20 +1,31 @@
 const load = (app, map) => {
-   map.forEach(square => {
+  for( const key in map ) {
 
-    const squareType = app.map.squareTypes[ square.type ]
-    const coordinates = square.coordinates
+    const coordinates = key.split('|')
+    const squareType = app.map.squareTypes[ map[key].type ]
+    const squareSize = app.map.squareSize    
 
     squareType.render({
-      coordinates: coordinates,
-      app: app, 
-      config: square.config ?? {}
+      coordinates: {
+        x: [
+          parseInt(coordinates[0]) * squareSize - (squareSize / 2), 
+          parseInt(coordinates[0]) * squareSize + (squareSize / 2)
+        ],
+        y: [
+          parseInt(coordinates[1]) * squareSize - (squareSize / 2), 
+          parseInt(coordinates[1]) * squareSize + (squareSize / 2)
+        ]
+      },
+      app: app,
+      config: map[key].config ?? {},
     })
-  })
-  
+  }
+
   app.map = {
     ...app.map,
     current: map,
-    getByCoordinates: coordinates => getByCoordinates(app, coordinates)
+    getSquareByCoordinates: coordinates => getSquareByCoordinates(app, coordinates),
+    getSquareType: type => getSquareType(app, type)
   }
 }
 
@@ -22,22 +33,19 @@ const registerSquareType = (app, type, square) => {
   app.map.squareTypes[ type ] = square
 }
 
-/**
- * I don't like that, but it'll do for now
- */
-const getByCoordinates = (app, coordinates) => {
-  for( let i = 0; i < app.map.current.length; i++ ) {
-    const square = app.map.current[i].coordinates
-    if(  
-         coordinates.x >= square.x[0] 
-      && coordinates.x <= square.x[1]
-      && coordinates.y >= square.y[0]
-      && coordinates.y <= square.y[1]
-    ) {
-      return app.map.current[i]
-    }
-  }
-  return false
+const getSquareType = (app, type) => (
+  app.map.squareTypes[ type ] ?? false
+)
+
+const getSquareByCoordinates = (app, coordinates) => {
+
+  const squareSize = app.map.squareSize
+  const halfSize = squareSize / 2
+  
+  const lowY = Math.floor( (coordinates.y + halfSize) / squareSize )
+  const lowX = Math.floor( (coordinates.x + halfSize) / squareSize )
+
+  return app.map.current[`${lowX}|${lowY}`] ?? false
 }
 
 export default {

@@ -1,31 +1,48 @@
 import { load } from '../import/'
+import { 
+  Box3, 
+  Vector3 
+} from 'three'
 
-/**
- * Avoid reloading the same object objects
- */
-const objects = {}
-
-/**
- * TODO: Should be app specific 
- */
-const add = (name, args, callback) => {
- 
-  if( objects[name] ) {
-    callback ? callback(objects[ name ]) : null
-    return;
-  }
-
+const add = (app, name, args, callback) => {
   load(name, 
     object => {
 
       object.walkable = args.walkable ?? false
-      objects[name] = object
+      app.world.objects.push(object)
       
       callback(object)
   })
 }
 
-export default {
-  objects: add,
-  add: add
+/**
+ * @see https://discourse.threejs.org/t/avoiding-collision-between-two-boxes/11235/9
+ */
+const hasCollisions = (app, item) => {
+
+ let hasCollision = false
+ 
+ const objectHitBox = item instanceof Vector3 
+  ? new Box3().setFromCenterAndSize(item, new Vector3(50, 50, 50))
+  : new Box3().setFromObject(object)
+
+ app.world.objects.map(object => {
+
+  if( object.walkable || hasCollision ) return;
+
+  const hitBox = new Box3().setFromObject(object)
+  const collision = objectHitBox.intersectsBox(hitBox)
+  
+  if( collision ) hasCollision = object
+ })
+
+ return hasCollision
 }
+
+const init = app => ({
+  objects: [],
+  add: (name, args, callback) => add(app, name, args, callback),
+  hasCollisions: object => hasCollisions(app, object)
+})
+
+export { init }

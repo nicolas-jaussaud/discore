@@ -7,11 +7,13 @@ import {
 
 import { render } from './render'
 import { init as initHooks } from '../hooks'
+import { init as initWorld } from '../world'
 
 const init = ({
   element,
   width = window.innerWidth,
   height = window.innerHeight,
+  squareSize = 200
 }) => {
   
   const renderer = new WebGLRenderer()
@@ -23,7 +25,7 @@ const init = ({
     height / 2, 
     height / - 2, 
     1, 
-    1000
+    Math.pow(10, 10)
   )
 
   const scene = new Scene()
@@ -32,18 +34,19 @@ const init = ({
   element.appendChild(renderer.domElement)
 
   const app = {
-    environment: 'live',
-    hooks: initHooks(),
-    scene: scene,
-    camera: camera,
-    characters: {
+    environment : 'live',
+    hooks       : initHooks(),
+    scene       : scene,
+    camera      : camera,
+    clock       : new Clock(),
+    characters  : {
       main: false,
       side: []
     },
     map: {
-      squareTypes: []
+      squareTypes : [],
+      squareSize  : squareSize
     },
-    clock: new Clock(),
     view: {
       set: view => {
         app.view.current = view
@@ -66,6 +69,8 @@ const init = ({
 
   app.render = () => render(app, renderer)
   app.render()
+
+  app.world = initWorld(app)
 
   return app
 }

@@ -2,8 +2,7 @@ import discore from '../../../discore/src'
 
 import {
   DirectionalLight,
-  HemisphereLight,
-  Color
+  HemisphereLight
 } from 'three'
 
 import { map } from './map'
@@ -12,10 +11,8 @@ import { registerSquares } from './squares'
 const init = () => {
 
   const app = discore.app.init({
-    element: document.getElementById('app'),
+    element: document.getElementById('app')
   })
-
-  app.environment = 'dev'
 
   registerSquares(app)
 
@@ -31,8 +28,8 @@ const init = () => {
     file       : folder + 'main.fbx',
     card       : folder + 'main.png',
     animations : {
-      run : folder + '/animations/run.fbx', 
-      idle: folder + '/animations/idle.fbx' 
+      run  : folder + '/animations/run.fbx', 
+      idle : folder + '/animations/idle.fbx' 
     },
     attributes : {
       speed: 0.5
@@ -47,8 +44,6 @@ const init = () => {
 
   app.scene.add(hemiLight)
   app.scene.add(sideLight)
-
-  app.scene.background = new Color( 0x55BBFF )
 
   window.app = app
 } 
