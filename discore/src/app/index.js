@@ -20,16 +20,16 @@ const init = ({
   renderer.setSize(width, height)
 
   const camera = new OrthographicCamera(
-    width / - 2, 
+    width / -2, 
     width / 2, 
     height / 2, 
-    height / - 2, 
+    height / -2, 
     1, 
-    Math.pow(10, 10)
+    1600
   )
 
   const scene = new Scene()
-  scene.add( camera )
+  scene.add(camera)
 
   element.appendChild(renderer.domElement)
 
@@ -64,7 +64,7 @@ const init = ({
     }
   }
   
-  camera.position.set( 0, 0, 400 )
+  camera.position.set( 0, 0, 800 )
   app.view.set('orthographic')
 
   app.render = () => render(app, renderer)
