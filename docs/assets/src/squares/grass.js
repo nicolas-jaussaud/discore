@@ -6,6 +6,7 @@ import {
 } from 'three'
 
 const renderGrass = ({
+  scene,
   coordinates,
   app
 }) => {
@@ -21,7 +22,7 @@ const renderGrass = ({
     0
   )
   
-  app.scene.add(plane)
+  scene.add(plane)
 }
 
 export { renderGrass }

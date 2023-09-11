@@ -7,7 +7,8 @@ import {
 
 const renderPath = ({
   coordinates,
-  app
+  app,
+  scene
 }) => {
 
   const geometry = new PlaneGeometry(app.map.squareSize, app.map.squareSize)
@@ -21,7 +22,7 @@ const renderPath = ({
     0
   )
   
-  app.scene.add(plane)
+  scene.add(plane)
 }
 
 export { renderPath }

@@ -37,7 +37,9 @@ const render = (app, renderer) => {
     if( mixer.update ) mixer.update(delta)
   }
   
-  renderer.render(app.scene, app.camera)
+  if( ! app.map.current ) return;
+
+  renderer.render(app.map.current.scene, app.camera)
 
   app.hooks.doAction('afterRender')
 }

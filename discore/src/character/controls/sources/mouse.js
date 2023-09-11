@@ -25,7 +25,7 @@ const mouseEvents = app => {
      * Set destination for character to the first intersection
      */
     raycaster.setFromCamera(mouse, app.camera)
-    const intersects = raycaster.intersectObjects(app.scene.children)
+    const intersects = raycaster.intersectObjects(app.map.current.scene.children)
 
     if( ! isWalkable(intersects[0] ?? false, app) ) return;
 

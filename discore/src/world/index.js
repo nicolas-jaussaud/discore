@@ -9,7 +9,7 @@ const add = (app, name, args, callback) => {
     object => {
 
       object.walkable = args.walkable ?? false
-      app.world.objects.push(object)
+      app.map.current.objects.push(object)
       
       callback(object)
   })
@@ -26,7 +26,7 @@ const hasCollisions = (app, item) => {
   ? new Box3().setFromCenterAndSize(item, new Vector3(50, 50, 50))
   : new Box3().setFromObject(object)
 
- app.world.objects.map(object => {
+ app.map.current.objects.map(object => {
 
   if( object.walkable || hasCollision ) return;
 

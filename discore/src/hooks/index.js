@@ -2,9 +2,9 @@ const init = () => {
 
   const actions = {}
   
-  const doAction = name => (actions[name] || []).forEach(callback => callback())
+  const doAction = (name, args={}) => (actions[name] || []).forEach(callback => callback(args))
   
-  const addAction = (name ,callback) => {
+  const addAction = (name, callback) => {
 
     if( ! actions[name] ) actions[name] = []
 

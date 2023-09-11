@@ -4,26 +4,32 @@ import { renderGrass } from './grass'
 import { renderWater } from './water'
 import { renderTree } from './tree'
 import { renderPath } from './path'
+import { renderExitPath } from './path-exit'
 
 const registerSquares = app =>  {
 
-  discore.map.registerSquareType(app, 'grass', {
+  app.map.registerSquareType('grass', {
     render   : renderGrass,
     walkable : true
   })
 
-  discore.map.registerSquareType(app, 'water', {
+  app.map.registerSquareType('water', {
     render   : renderWater,
     walkable : false
   })
 
-  discore.map.registerSquareType(app, 'tree', {
+  app.map.registerSquareType('tree', {
     render   : renderTree,
     walkable : true
   })
 
-  discore.map.registerSquareType(app, 'path', {
+  app.map.registerSquareType('path', {
     render   : renderPath,
+    walkable : true
+  })
+
+  app.map.registerSquareType('path-exit', {
+    render   : renderExitPath,
     walkable : true
   })
 }

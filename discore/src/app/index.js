@@ -1,13 +1,14 @@
 import { 
   Clock,
   OrthographicCamera,
-  Scene,
   WebGLRenderer
- } from 'three'
+} from 'three'
 
 import { render } from './render'
 import { init as initHooks } from '../hooks'
 import { init as initWorld } from '../world'
+import { init as initMap } from '../map'
+import { init as initLoading } from './loading'
 
 const init = ({
   element,
@@ -28,24 +29,19 @@ const init = ({
     1600
   )
 
-  const scene = new Scene()
-  scene.add(camera)
-
   element.appendChild(renderer.domElement)
+  const loading = initLoading(element)
 
   const app = {
+    loading     : loading,
     environment : 'live',
     hooks       : initHooks(),
-    scene       : scene,
     camera      : camera,
     clock       : new Clock(),
+    lights      : [],
     characters  : {
       main: false,
       side: []
-    },
-    map: {
-      squareTypes : [],
-      squareSize  : squareSize
     },
     view: {
       set: view => {
@@ -64,6 +60,8 @@ const init = ({
     }
   }
   
+  app.map = initMap(app, squareSize)
+
   camera.position.set( 0, 0, 800 )
   app.view.set('orthographic')
 
@@ -71,6 +69,12 @@ const init = ({
   app.render()
 
   app.world = initWorld(app)
+
+  const removeLoading = () => {
+    app.loading.set(false)
+    app.hooks.removeAction('afterRender', removeLoading)
+  }
+  app.hooks.addAction('afterRender', removeLoading)
 
   return app
 }

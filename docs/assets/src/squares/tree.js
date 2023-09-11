@@ -3,10 +3,11 @@ import { renderGrass } from './grass'
 const renderTree = ({
   coordinates,
   app,
-  config
+  config,
+  scene
 }) => {
 
-  renderGrass({coordinates, app})
+  renderGrass({coordinates, app, scene})
   
   app.world.add(
     `./assets/ressources/world/tree/forest${config.type ?? 1}.fbx`,
@@ -22,7 +23,7 @@ const renderTree = ({
       tree.scale.set( 0.2, 0.2, 0.2 )
       tree.rotation.x = Math.PI / 2
     
-      app.scene.add(tree)
+      scene.add(tree)
     }
   )
 }

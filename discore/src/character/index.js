@@ -13,9 +13,7 @@ const setMainCharacter = (app, character, callback) => {
       ...(character.attributes ?? {})
     }
 
-    app.scene.add(object)
     app.characters.main = character
-
     app.controls = initControls(app)
 
     callback(character)

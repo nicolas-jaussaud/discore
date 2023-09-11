@@ -7,7 +7,8 @@ import {
 
 const renderWater = ({
   coordinates,
-  app
+  app,
+  scene
 }) => {
 
   const geometry = new PlaneGeometry(app.map.squareSize, app.map.squareSize)
@@ -21,7 +22,7 @@ const renderWater = ({
     0
   )
   
-  app.scene.add(plane)
+  scene.add(plane)
 }
 
 export { renderWater }

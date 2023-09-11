@@ -80,6 +80,8 @@ const move = (app, coordinates) => {
     character.lookAt(targetPosition)
 
     requestAnimationFrame(update)
+
+    app.hooks.doAction('characterMoved', { 'character': character })
   }
 
   let lastTimestamp = performance.now()
