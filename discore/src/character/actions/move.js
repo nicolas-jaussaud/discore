@@ -1,17 +1,12 @@
 import { Vector3 } from 'three'
 
 const move = (app, coordinates) => {
-          
-  /**
-   * We don't handle changing direction while moving currently
-   */
-  if( app.controls.actions.run.isMoving ) {
-    return;
-  }
-  
+
   const character = app.characters.main.object
   const speed = app.characters.main.attributes.speed
-  const animations = app.controls.actions.run.animations
+  const run = app.controls.actions.run
+
+  if( run.isActive ) run.stop()
 
   const targetPosition = new Vector3(
     coordinates.x, 
@@ -26,9 +21,16 @@ const move = (app, coordinates) => {
    */
   character.up = new Vector3(0, 0, 1)
   
-  animations.start()
-
+  const actionId = app.controls.actions.currentAction = Date.now()
+  
   const update = timestamp => {
+
+    if( app.controls.actions.currentAction !== actionId ) {
+      run.stop()
+      return;
+    }
+
+    if( ! run.isActive ) run.animations.start()
 
     const deltaTime = timestamp - lastTimestamp
     lastTimestamp = timestamp
@@ -38,7 +40,7 @@ const move = (app, coordinates) => {
     
     if( distanceRemaining <= distance ) {
       character.position.copy(targetPosition) // Position might not be exactly right
-      animations.stop()
+      run.stop()
       return;
     }
 
@@ -61,18 +63,18 @@ const move = (app, coordinates) => {
 
     const nextSquare = app.map.getSquareByCoordinates(distanceCheck)
     if( nextSquare === false ) {
-      animations.stop()
+      run.stop()
       return;
     }
 
     const squareType = app.map.getSquareType(nextSquare.type ?? false)  
     if( ! squareType || squareType.walkable === false ) {
-      animations.stop()
+      run.stop()
       return;
     }
 
     if( app.world.hasCollisions(distanceCheck) ) {
-      animations.stop()
+      run.stop()
       return;
     }
 

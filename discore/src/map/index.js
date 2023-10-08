@@ -2,6 +2,10 @@ import { Scene } from 'three'
 
 const load = (app, name, squares, initialSquare) => {
 
+  if( app.controls.actions.currentAction ) {
+    app.controls.actions.currentAction = false
+  }
+
   if( app.map.maps[name] ) {
     app.map.current = app.map.maps[name]
     app.map.current.scene.add(app.characters.main.object)
