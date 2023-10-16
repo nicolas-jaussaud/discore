@@ -33,7 +33,7 @@ const renderExitPath = ({
     character
   }) => {
 
-    const square = app.map.getSquareByCoordinates(character.position)
+    const square = app.map.getSquareByCoordinates(character.object.position)
     
     if( square.key !== key ) return;
 

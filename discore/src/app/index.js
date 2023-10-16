@@ -8,6 +8,8 @@ import { render } from './render'
 import { init as initHooks } from '../hooks'
 import { init as initWorld } from '../world'
 import { init as initMap } from '../map'
+import { init as initCharacter } from '../character'
+import { init as initControls } from '../controls'
 import { init as initLoading } from './loading'
 
 const init = ({
@@ -39,10 +41,6 @@ const init = ({
     camera      : camera,
     clock       : new Clock(),
     lights      : [],
-    characters  : {
-      main: false,
-      side: []
-    },
     view: {
       set: view => {
         app.view.current = view
@@ -61,7 +59,9 @@ const init = ({
   }
   
   app.map = initMap(app, squareSize)
-
+  app.characters = initCharacter(app)
+  app.controls = initControls(app)
+  
   camera.position.set( 0, 0, 800 )
   app.view.set('orthographic')
 
@@ -79,6 +79,4 @@ const init = ({
   return app
 }
 
-export default {
-  init: init
-}
+export default init

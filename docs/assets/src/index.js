@@ -10,7 +10,7 @@ import { registerSquares } from './squares'
 
 const init = () => {
 
-  const app = discore.app.init({
+  const app = discore.init({
     element: document.getElementById('app')
   })
 
@@ -18,8 +18,8 @@ const init = () => {
 
   const folder = './assets/ressources/characters/main/'
 
-  discore.character.setMainCharacter(app, {
-    name       : 'Main character', 
+  app.characters.add({
+    name       : 'main', 
     file       : folder + 'main.fbx',
     card       : folder + 'main.png',
     animations : {
@@ -31,6 +31,8 @@ const init = () => {
     }
   }, character => {
 
+    app.characters.setMain(character.name)
+    
     character.object.scale.set(0.5, 0.5, 0.5)
     character.object.rotation.x = Math.PI / 2
 

@@ -4,14 +4,16 @@ import { load } from '../import'
 const loadAnimations = (app, character) => {
 
   character.mixer = new AnimationMixer(character.object)
-
-  for( const name in character.animations ?? [] ) {
+  
+  const animations = character.animations ?? []
+  character.animations = {}
+  
+  for( const name in animations ?? [] ) {
     loadAnimation(
-      character.animations[ name ],
+      animations[ name ],
       animation =>  {
-        // Bad, should not use app here
-        app.characters.main.animations[ name ] = character.mixer.clipAction(animation.animations[0]) 
-        if( name === 'idle' ) app.characters.main.startAnimation('idle')
+        character.animations[ name ] = character.mixer.clipAction(animation.animations[0]) 
+        if( name === 'idle' ) character.startAnimation('idle')
       }
     )
   }

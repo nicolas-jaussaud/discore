@@ -1,10 +1,8 @@
-import app from './app'
-import character from './character'
+import init from './app'
 
 window.discore = {
-  app: app,
-  character: character
-} 
+  init: init,
+}
 
 export default discore
 

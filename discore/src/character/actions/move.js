@@ -1,9 +1,8 @@
 import { Vector3 } from 'three'
 
-const move = (app, coordinates) => {
+const move = (app, coordinates, character) => {
 
-  const character = app.characters.main.object
-  const speed = app.characters.main.attributes.speed
+  const speed = character.attributes.speed
   const run = app.controls.actions.run
 
   if( run.isActive ) run.stop()
@@ -19,7 +18,7 @@ const move = (app, coordinates) => {
    * 
    * @see https://threejs.org/docs/#api/en/core/Object3D.up
    */
-  character.up = new Vector3(0, 0, 1)
+  character.object.up = new Vector3(0, 0, 1)
   
   const actionId = app.controls.actions.currentAction = Date.now()
   
@@ -36,15 +35,15 @@ const move = (app, coordinates) => {
     lastTimestamp = timestamp
 
     const distance = speed * deltaTime
-    const distanceRemaining = character.position.distanceTo(targetPosition)
+    const distanceRemaining = character.object.position.distanceTo(targetPosition)
     
     if( distanceRemaining <= distance ) {
-      character.position.copy(targetPosition) // Position might not be exactly right
+      character.object.position.copy(targetPosition) // Position might not be exactly right
       run.stop()
       return;
     }
 
-    const deltaDistance = targetPosition.clone().sub(character.position)
+    const deltaDistance = targetPosition.clone().sub(character.object.position)
     const direction = deltaDistance.normalize()
     
     /**
@@ -55,9 +54,9 @@ const move = (app, coordinates) => {
      * the character is at the absolute edge of the map (it can be hard to move back from there)
      */
     const distanceCheck = new Vector3(
-      character.position.x,
-      character.position.y,
-      character.position.z
+      character.object.position.x,
+      character.object.position.y,
+      character.object.position.z
     )
     distanceCheck.add( direction.clone().multiplyScalar(distance * 3) )
 
@@ -78,8 +77,8 @@ const move = (app, coordinates) => {
       return;
     }
 
-    character.position.add( direction.multiplyScalar(distance) )
-    character.lookAt(targetPosition)
+    character.object.position.add( direction.multiplyScalar(distance) )
+    character.object.lookAt(targetPosition)
 
     requestAnimationFrame(update)
 

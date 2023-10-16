@@ -1,6 +1,6 @@
 import { mouseEvents } from './sources/mouse'
 import { keyboardEvents } from './sources/keyboard'
-import { move } from '../actions/move'
+import { move } from '../character/actions/move'
 
 const init = app => ({
   sources: {
@@ -14,16 +14,20 @@ const init = app => ({
       animations: {
         start: () => {
           app.controls.actions.run.isActive = true
-          app.characters.main.stopAnimation('idle')
-          app.characters.main.startAnimation('run')
+          app.characters.getMain().stopAnimation('idle')
+          app.characters.getMain().startAnimation('run')
         },
         stop: () => {
           app.controls.actions.run.isActive = false
-          app.characters.main.stopAnimation('run')
-          app.characters.main.startAnimation('idle')
+          app.characters.getMain().stopAnimation('run')
+          app.characters.getMain().startAnimation('idle')
         }
       },
-      move: (x, y, z) => move(app, { x: x, y: y, z: z }),
+      move: (x, y, z) => move(
+        app, 
+        { x: x, y: y, z: z },
+        app.characters.getMain()
+      ),
       stop: () => {
         app.controls.currentAction = false
         app.controls.actions.run.animations.stop()
