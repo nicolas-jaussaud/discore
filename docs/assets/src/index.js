@@ -5,8 +5,8 @@ import {
   HemisphereLight
 } from 'three'
 
-import maps from './maps/'
 import { registerSquares } from './squares'
+import { init as initCharacters } from './characters'
 
 const init = () => {
 
@@ -16,28 +16,7 @@ const init = () => {
 
   registerSquares(app)
 
-  const folder = './assets/ressources/characters/main/'
-
-  app.characters.add({
-    name       : 'main', 
-    file       : folder + 'main.fbx',
-    card       : folder + 'main.png',
-    animations : {
-      run  : folder + '/animations/run.fbx', 
-      idle : folder + '/animations/idle.fbx' 
-    },
-    attributes : {
-      speed: 0.5
-    }
-  }, character => {
-
-    app.characters.setMain(character.name)
-    
-    character.object.scale.set(0.5, 0.5, 0.5)
-    character.object.rotation.x = Math.PI / 2
-
-    app.map.load('map1', maps['map1'], '0|0')
-  })
+  initCharacters(app)
 
   const sideLight = new DirectionalLight('rgb(200, 230, 255)', 0.3)
   const hemiLight = new HemisphereLight( 0x9999FF, 0x88ffFF, 0.7 ); 

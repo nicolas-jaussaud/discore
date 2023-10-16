@@ -10,6 +10,7 @@ import { init as initWorld } from '../world'
 import { init as initMap } from '../map'
 import { init as initCharacter } from '../character'
 import { init as initControls } from '../controls'
+import { init as initLoaders } from '../import'
 import { init as initLoading } from './loading'
 
 const init = ({
@@ -59,9 +60,10 @@ const init = ({
   }
   
   app.map = initMap(app, squareSize)
+  app.loaders = initLoaders(app)
   app.characters = initCharacter(app)
   app.controls = initControls(app)
-  
+
   camera.position.set( 0, 0, 800 )
   app.view.set('orthographic')
 

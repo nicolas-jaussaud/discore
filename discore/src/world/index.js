@@ -1,11 +1,10 @@
-import { load } from '../import/'
 import { 
   Box3, 
   Vector3 
 } from 'three'
 
 const add = (app, name, args, callback) => {
-  load(name, 
+  app.loaders.load(name, 
     object => {
 
       object.walkable = args.walkable ?? false

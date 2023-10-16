@@ -1,11 +1,11 @@
 import { Vector3 } from 'three'
 
-const move = (app, coordinates, character) => {
+const move = (app, coordinates, character, type) => {
 
-  const speed = character.attributes.speed
-  const run = app.controls.actions.run
+  const speed = character.attributes.speed[ type ]
+  const action = character.actions.move
 
-  if( run.isActive ) run.stop()
+  if( action.isActive ) action.stop()
 
   const targetPosition = new Vector3(
     coordinates.x, 
@@ -20,16 +20,16 @@ const move = (app, coordinates, character) => {
    */
   character.object.up = new Vector3(0, 0, 1)
   
-  const actionId = app.controls.actions.currentAction = Date.now()
+  const actionId = character.actions.currentAction = Date.now()
   
   const update = timestamp => {
 
-    if( app.controls.actions.currentAction !== actionId ) {
-      run.stop()
+    if( character.actions.currentAction !== actionId ) {
+      action.stop()
       return;
     }
-
-    if( ! run.isActive ) run.animations.start()
+        
+    if( ! action.isActive ) action.animations.start(type)
 
     const deltaTime = timestamp - lastTimestamp
     lastTimestamp = timestamp
@@ -39,7 +39,7 @@ const move = (app, coordinates, character) => {
     
     if( distanceRemaining <= distance ) {
       character.object.position.copy(targetPosition) // Position might not be exactly right
-      run.stop()
+      action.stop()
       return;
     }
 
@@ -62,24 +62,24 @@ const move = (app, coordinates, character) => {
 
     const nextSquare = app.map.getSquareByCoordinates(distanceCheck)
     if( nextSquare === false ) {
-      run.stop()
+      action.stop()
       return;
     }
 
     const squareType = app.map.getSquareType(nextSquare.type ?? false)  
     if( ! squareType || squareType.walkable === false ) {
-      run.stop()
+      action.stop()
       return;
     }
 
     if( app.world.hasCollisions(distanceCheck) ) {
-      run.stop()
+      action.stop()
       return;
     }
 
     character.object.position.add( direction.multiplyScalar(distance) )
     character.object.lookAt(targetPosition)
-
+    
     requestAnimationFrame(update)
 
     app.hooks.doAction('characterMoved', { 'character': character })

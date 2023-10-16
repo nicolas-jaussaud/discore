@@ -1,31 +1,38 @@
 import { AnimationMixer } from 'three'
-import { load } from '../import'
 
-const loadAnimations = (app, character) => {
+const loadAnimations = (app, character, callback) => {
 
   character.mixer = new AnimationMixer(character.object)
   
   const animations = character.animations ?? []
   character.animations = {}
   
+  // Need a less ugly way to do this
+  const promises = []
   for( const name in animations ?? [] ) {
-    loadAnimation(
-      animations[ name ],
-      animation =>  {
-        character.animations[ name ] = character.mixer.clipAction(animation.animations[0]) 
-        if( name === 'idle' ) character.startAnimation('idle')
-      }
+    promises.push(
+      new Promise(resolve => (
+        loadAnimation(
+          app,
+          animations[ name ],
+          animation => {
+            character.animations[ name ] = character.mixer.clipAction(animation.animations[0]) 
+            if( name === 'idle' ) character.startAnimation('idle')
+            resolve()
+          }
+        )
+      ))
     )
   }
 
   character.startAnimation = animation => start(character.animations ?? [], animation)
   character.stopAnimation = animation => stop(character.animations ?? [], animation)
-  
-  return character
+
+  Promise.all(promises).then(() => callback(character))
 }
 
-const loadAnimation = (file, callback) => (
-  load(file, callback)
+const loadAnimation = (app, file, callback) => (
+  app.loaders.load(file, callback)
 )
 
 const start = (animations, action) => (

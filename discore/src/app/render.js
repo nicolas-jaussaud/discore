@@ -15,30 +15,30 @@ const render = (app, renderer) => {
    */
   if( app.camera && mainCharacter ) {
 
-    const character = mainCharacter.object.position
+    const characterPostion = mainCharacter.object.position
     const camera = app.camera
 
     if( app.view.current === 'orthographic' ) {
-      camera.position.x = character.x + 400
-      camera.position.y = character.y - 400
+      camera.position.x = characterPostion.x + 400
+      camera.position.y = characterPostion.y - 400
     }
     else if( app.view.current === 'top' ) {
-      camera.position.x = character.x
-      camera.position.y = character.y
+      camera.position.x = characterPostion.x
+      camera.position.y = characterPostion.y
     }
   }
-  
+
   /**
-   * Make sure to animate character animations
+   * Character animations
    */
-  if( mainCharacter && mainCharacter.mixer ) {
+  const characters = app?.characters.getAll()
+  const delta = app.clock.getDelta()
 
-    const mixer = mainCharacter.mixer
-    const delta = app.clock.getDelta()
-
-    if( mixer.update ) mixer.update(delta)
+  for( const name in characters ) {
+    const mixer = characters[name].mixer ?? false
+    if( mixer && mixer.update ) mixer.update(delta)
   }
-  
+
   if( ! app.map.current ) return;
 
   renderer.render(app.map.current.scene, app.camera)

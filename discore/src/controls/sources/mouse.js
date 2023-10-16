@@ -29,7 +29,7 @@ const mouseEvents = app => {
 
     if( ! isWalkable(intersects[0] ?? false, app) ) return;
 
-    app.controls.actions.run.move(
+    app.characters.getMain().actions.move.start(
       intersects[0].point.x,
       intersects[0].point.y,
       intersects[0].point.z

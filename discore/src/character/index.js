@@ -1,20 +1,27 @@
-import { load } from '../import'
 import { loadAnimations } from './animation'
+import { init as initActions } from './actions'
 
 const add = (app, character, callback) => {
-  load(character.file, object => {
+  app.loaders.load(character.file, object => {
 
     character.object = object
-    character = loadAnimations(app, character)
-
+    character.object.walkable = false
     character.attributes = {
-      speed: 0.3,
+      speed: {
+        run: 0.5,
+        walk: 0.1,
+        ...character.attributes
+      },
       ...(character.attributes ?? {})
     }
 
-    app.characters.list[ character.name ] = character
+    loadAnimations(app, character, character => {
 
-    callback(character)
+      character.actions = initActions(app, character)
+      app.characters.list[ character.name ] = character
+      
+      callback(character)
+    })
   })
 }
 
@@ -32,7 +39,9 @@ const init = app => ({
   main    : false,
   list    : {},
   add     : (character, callback) => add(app, character, callback),
-  getMain : name => getMain(app),
+  get     : name => app.characters.list[ name ] ?? false,
+  getAll  : () => app.characters.list,
+  getMain : () => getMain(app),
   setMain : name => setMain(app, name)
 })
 
