@@ -1,110 +1,30 @@
-export default (app, character) => ([
-  // Leave from the river to the path
-  () => {
-    const coordinates = app.map.getCoordinateBySquare('0|-4')
-    return character.actions.move.start(coordinates.x, coordinates.y, 0, 'walk')
-  },
-  // Leave from the bottom of the map to the bridge
-  () => {
-    const coordinates = app.map.getCoordinateBySquare('0|-2')
-    return character.actions.move.start(coordinates.x, coordinates.y, 0, 'walk')
-  },
-  // Go on the right side of the bridge
-  () => {
-    const coordinates = app.map.getCoordinateBySquare('0|-2')
-    return character.actions.move.start(coordinates.x - 50, coordinates.y, 0, 'walk')
-  },
-  // Wait for 10 second
-  () => {
-    character.startAnimation('stretch')
-    return new Promise(resolve => setTimeout(() => {
-      character.stopAnimation('stretch')
-      resolve()
-    }, 10000))
-  },
-  // Go back on center of the path
-  () => {
-    const coordinates = app.map.getCoordinateBySquare('0|-2')
-    return character.actions.move.start(coordinates.x, coordinates.y, 0, 'walk')
-  },
-  // Leave from the bridge to the top of the map
-  () => {
-    const coordinates = app.map.getCoordinateBySquare('0|0')
-    return character.actions.move.start(coordinates.x, coordinates.y, 0, 'walk')
-  },
-  // Leave from the top to the top right
-  () => {
-    const coordinates = app.map.getCoordinateBySquare('-2|0')
-    return character.actions.move.start(coordinates.x - 50, coordinates.y, 0, 'walk')
-  },
-  // Go on next to the river
-  () => {
-    const coordinates = app.map.getCoordinateBySquare('-2|0')
-    return character.actions.move.start(coordinates.x - 50, coordinates.y - 50, 0, 'walk')
-  },
-  // Wait for 10 second
-  () => {
-    character.startAnimation('stretch')
-    return new Promise(resolve => setTimeout(() => {
-      character.stopAnimation('stretch')
-      resolve()
-    }, 10000))
-  },
-  // Go back on center of the path
-  () => {
-    const coordinates = app.map.getCoordinateBySquare('-2|0')
-    return character.actions.move.start(coordinates.x, coordinates.y -50, 0, 'walk')
-  },
-  // Leave from the top right to the top center
-  () => {
-    const coordinates = app.map.getCoordinateBySquare('0|0')
-    return character.actions.move.start(coordinates.x, coordinates.y -50, 0, 'walk')
-  },
-  // Leave from the top of the map to the bridge
-  () => {
-    const coordinates = app.map.getCoordinateBySquare('0|-2')
-    return character.actions.move.start(coordinates.x, coordinates.y, 0, 'walk')
-  },
-  // Go on the right side of the bridge
-  () => {
-    const coordinates = app.map.getCoordinateBySquare('0|-2')
-    return character.actions.move.start(coordinates.x + 50, coordinates.y, 0, 'walk')
-  },
-  // Wait for 10 second
-  () => {
-    character.startAnimation('stretch')
-    return new Promise(resolve => setTimeout(() => {
-      character.stopAnimation('stretch')
-      resolve()
-    }, 10000))
-  },
-  // Go back on center of the path
-  () => {
-    const coordinates = app.map.getCoordinateBySquare('0|-2')
-    return character.actions.move.start(coordinates.x, coordinates.y, 0, 'walk')
-  },
-  // Leave from the bridge to the bottom of the map
-  () => {
-    const coordinates = app.map.getCoordinateBySquare('0|-4')
-    return character.actions.move.start(coordinates.x, coordinates.y, 0, 'walk')
-  },
-  // Leave to the bottom right
-  () => {
-    const coordinates = app.map.getCoordinateBySquare('2|-4')
-    return character.actions.move.start(coordinates.x, coordinates.y, 0, 'walk')
-  },
-  // Go on the right side of the bridge
-  () => {
-    const coordinates = app.map.getCoordinateBySquare('2|-4')
-    return character.actions.move.start(coordinates.x, coordinates.y + 50, 0, 'walk')
-  },
-  // Wait for 10 second
-  () => {
-    character.startAnimation('stretch')
-    return new Promise(resolve => setTimeout(() => {
-      character.stopAnimation('stretch')
-      resolve()
-    }, 10000))
-  }
+export default [
+  // River -> Central path -> Side of the bridge
+  character => character.actions.moveToSquare.start('0|-4', {}, 'walk'),
+  character => character.actions.moveToSquare.start('0|-2', {}, 'walk'),
+  character => character.actions.moveToSquare.start('0|-2', { x: -50 }, 'walk'),
+  // Wait for 5 second
+  character => character.actions.wait.start(5000, 'stretch'),
+  // Side of the bridge -> Top of path -> River
+  character => character.actions.moveToSquare.start('0|-2', {}, 'walk'),
+  character => character.actions.moveToSquare.start('0|0', {}, 'walk'),
+  character => character.actions.moveToSquare.start('-2|0', { x: -50 }, 'walk'),
+  character => character.actions.moveToSquare.start('-2|0', { x: -50, y: -50 }, 'walk'),
+  // Wait for 5 second
+  character => character.actions.wait.start(5000, 'stretch'),
+  // River -> Top of the path -> Side of the bridge
+  character => character.actions.moveToSquare.start('-2|0', { y: -50 }, 'walk'),
+  character => character.actions.moveToSquare.start('0|0', { y: -50 }, 'walk'),
+  character => character.actions.moveToSquare.start('0|-2', {}, 'walk'),
+  character => character.actions.moveToSquare.start('0|-2', { x: 50 }, 'walk'),
+  // Wait for 5 second
+  character => character.actions.wait.start(5000, 'stretch'),
+  // Side of the bridge -> Bottom of the path -> River
+  character => character.actions.moveToSquare.start('0|-2', {}, 'walk'),
+  character => character.actions.moveToSquare.start('0|-4', {}, 'walk'),
+  character => character.actions.moveToSquare.start('2|-4', {}, 'walk'),
+  character => character.actions.moveToSquare.start('2|-4', { y: +50 }, 'walk'),
+  // Wait for 5 second
+  character => character.actions.wait.start(5000, 'stretch'),
   // Start again!
-])
+]

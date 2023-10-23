@@ -30,7 +30,35 @@ const init = (app, character) => ({
       if( character.actions.move.resolution ) character.actions.move.resolution()
       character.actions.move.animations.stop()
     }
-  }
+  },
+  moveToSquare: {
+    start: (key, position = {}, type = 'run') => {
+      const coordinates = app.map.getCoordinateBySquare(key)
+      return character.actions.move.start(
+        coordinates.x + (position.x ?? 0), 
+        coordinates.y + (position.y ?? 0), 
+        0,
+        type
+      )
+    },
+    stop: () => character.actions.move.stop()
+  },
+  wait: {
+    resolve: false,
+    start: (time, type = false) => (
+      new Promise(resolve => {
+        character.startAnimation(type)
+        character.actions.wait.resolution = () => {
+          character.stopAnimation(type)
+          resolve()
+        }
+        setTimeout(character.actions.wait.stop, time)
+      })
+    ),
+    stop: () => {
+      if( character.actions.wait.resolution ) character.actions.wait.resolution()
+    }
+  },
 })
 
 export { init }

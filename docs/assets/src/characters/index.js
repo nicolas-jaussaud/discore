@@ -26,10 +26,9 @@ const init = app => {
       app.map.moveCharacterOnSquare('2|-4', character)
 
       // Loop on defined actions
-      const actions = stories('1')(app, character)
       const doAction = index => {
-        actions[ index ]().then(() => doAction(
-          actions.length - 1 !== index ? index + 1 : 0 
+        stories[0][ index ](character).then(() => doAction(
+          stories[0].length - 1 !== index ? index + 1 : 0 
         ))
       }
       doAction(0)
@@ -49,10 +48,9 @@ const init = app => {
       app.map.moveCharacterOnSquare('0|-1', character)
 
       // Loop on defined actions
-      const actions = stories('2')(app, character)
       const doAction = index => {
-        actions[ index ]().then(() => doAction(
-          actions.length - 1 !== index ? index + 1 : 0 
+        stories[1][ index ](character).then(() => doAction(
+          stories[1].length - 1 !== index ? index + 1 : 0 
         ))
       }
       doAction(0)
