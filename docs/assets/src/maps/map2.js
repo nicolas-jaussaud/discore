@@ -8,7 +8,7 @@ const map2 = {
   '1|1': { type: 'tree', config: { type: 1 } },
   '2|1': { type: 'grass' },
 
-  '2|0': { type: 'grass' },
+  '2|0': { type: 'tree', config: { type: 2 } },
   '1|0': { type: 'grass' },
   '0|0': { type: 'path' },
   '-1|0': { type: 'grass' },
@@ -18,7 +18,7 @@ const map2 = {
   '-1|-1': { type: 'tree', config: { type: 2 } },
   '0|-1': { type: 'path' },
   '1|-1': { type: 'grass' },
-  '2|-1': { type: 'tree', config: { type: 3 } },
+  '2|-1': { type: 'grass' },
 
   '2|-2': { type: 'grass' },
   '1|-2': { type: 'water' },

@@ -2,6 +2,7 @@ import { debug } from './debug'
 
 const render = (app, renderer) => {
 
+  if( app.status === 'paused' ) return;
   if( app.environment === 'dev' ) debug(app)
 
   app.hooks.doAction('beforeRender')

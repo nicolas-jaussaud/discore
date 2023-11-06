@@ -8,7 +8,7 @@ const map1 = {
 
   '-2|1': { type: 'grass' },
   '-1|1': { type: 'grass' },
-  '0|1': { type: 'tree', config: { type: 8 } },
+  '0|1': { type: 'tree', config: { type: 1 } },
   '1|1': { type: 'grass' },
   '2|1': { type: 'tree', config: { type: 1 } },
 

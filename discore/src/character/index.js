@@ -25,7 +25,7 @@ const add = (app, character, callback) => {
   })
 }
 
-const getMain = (app) => (
+const getMain = app => (
   app.characters.main
     ? app.characters.list[ app.characters.main ]
     : false

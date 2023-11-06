@@ -8,7 +8,7 @@ const init = app => {
   /**
    * Main character
    */
-  createCharacter(app, 'main', 'blue', character => {
+  createCharacter(app, 'main', 'yellow', character => {
     app.characters.setMain(character.name)
     app.map.load('map1', maps['map1'], '0|0')
   })
@@ -20,7 +20,7 @@ const init = app => {
 
     if( args.name !== 'map1' ) return;
 
-    createCharacter(app, 'peasant1', 'yellow', character => {
+    createCharacter(app, 'peasant1', 'brown', character => {
 
       app.map.current.scene.add(character.object)
       app.map.moveCharacterOnSquare('2|-4', character)
@@ -56,7 +56,7 @@ const init = app => {
       doAction(0)
     })
 
-    createCharacter(app, 'peasant3', 'yellow', character => {
+    createCharacter(app, 'peasant3', 'blue', character => {
 
       app.map.current.scene.add(character.object)
 
@@ -65,10 +65,12 @@ const init = app => {
       character.object.position.set(
         coordinates.x - 75,
         coordinates.y - 100,
-        -10        
+        -10
       )
     })
   })
 }
+
+
 
 export { init }

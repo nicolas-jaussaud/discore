@@ -40,6 +40,12 @@ const createCharacter = (
     }
   }, character => {
 
+    /**
+     * Only the main character has the privilege of the hat
+     */
+    if( character.name !== 'main' ) {
+      character.object.children[1].removeFromParent()
+    }
     character.object.scale.set(0.5, 0.5, 0.5)
     character.object.rotation.x = Math.PI / 2
 

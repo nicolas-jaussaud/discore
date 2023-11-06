@@ -24,13 +24,19 @@ const move = (app, coordinates, character, type) => {
   
   const update = timestamp => {
 
+    if( app.status === 'paused' ) {
+      lastTimestamp = timestamp
+      requestAnimationFrame(update)
+      return;      
+    }
+
     if( character.actions.currentAction !== actionId ) {
       action.stop()
       return;
     }
         
     if( ! action.isActive ) action.animations.start(type)
-
+    
     const deltaTime = timestamp - lastTimestamp
     lastTimestamp = timestamp
 

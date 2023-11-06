@@ -37,11 +37,21 @@ const init = ({
 
   const app = {
     loading     : loading,
+    status      : 'started',
     environment : 'live',
     hooks       : initHooks(),
     camera      : camera,
     clock       : new Clock(),
     lights      : [],
+    stop        : () => {
+      app.clock.stop()
+      app.status = 'paused'
+    },
+    start       : () => {
+      app.clock.start()
+      app.status = 'started'
+      app.render()
+    },
     view: {
       set: view => {
         app.view.current = view
@@ -62,7 +72,6 @@ const init = ({
   app.map = initMap(app, squareSize)
   app.loaders = initLoaders(app)
   app.characters = initCharacter(app)
-  app.controls = initControls(app)
 
   camera.position.set( 0, 0, 800 )
   app.view.set('orthographic')
@@ -74,10 +83,11 @@ const init = ({
 
   const removeLoading = () => {
     app.loading.set(false)
+    app.controls = initControls(app)
     app.hooks.removeAction('afterRender', removeLoading)
   }
   app.hooks.addAction('afterRender', removeLoading)
-
+  
   return app
 }
 
