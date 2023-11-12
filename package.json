@@ -1,15 +1,11 @@
 {
   "name": "discore",
   "version": "1.0.0",
-  "description": "Dicso",
   "scripts": {
     "dev": "roll dev",
-    "build": "roll build",
-    "build:all": "roll build discore; roll build discursed; roll build docs"
+    "build": "roll build"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "three": "^0.146.0"
   },
   "devDependencies": {
