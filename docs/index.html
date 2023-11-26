@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://nicolas-jaussaud.github.io/flopumentation/build/flopumentation.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark-dimmed.css">
+    <script src="https://nicolas-jaussaud.github.io/flopumentation/build/flopumentation.min.js"></script>
+  </head>
+  <body>
+  <body>
+    <script>
+      flopumentation({
+        title       : 'Discore',
+        initialPage : './pages/getting-started/introduction.md',
+        sections    : [
+          {
+            title : 'Getting started',
+            pages : [
+              { 
+                title   : 'Introduction',
+                content : './pages/getting-started/introduction.md'
+              },
+              { 
+                title   : 'Script and dependencies',
+                content : './pages/getting-started/script-and-dependencies.md'
+              },
+              { 
+                title   : 'Usage',
+                content : './pages/getting-started/usage.md'
+              },
+            ]
+          },
+          {
+            title : 'Guides',
+            pages : [
+              { 
+                title   : 'Create a new app',
+                content : './pages/guides/create-app.md'
+              },
+              { 
+                title   : 'Load characters',
+                content : './pages/guides/load-characters.md'
+              },
+              { 
+                title   : 'Register square types',
+                content : './pages/guides/register-square-types.md'
+              },
+              { 
+                title   : 'Load maps',
+                content : './pages/guides/load-maps.md'
+              },
+              { 
+                title   : 'Import objects',
+                content : './pages/guides/import-objects.md'
+              }
+            ]
+          },
+          {
+            title : 'Reference',
+            pages : [
+              { 
+                title   : 'app',
+                content : './pages/reference/app.md'
+              },
+              { 
+                title   : 'app.characters',
+                content : './pages/reference/app.characters.md'
+              },
+              { 
+                title   : 'app.hooks',
+                content : './pages/reference/app.hooks.md'
+              },
+              { 
+                title   : 'app.map',
+                content : './pages/reference/app.map.md'
+              },
+              { 
+                title   : 'app.world',
+                content : './pages/reference/app.world.md'
+              },
+              { 
+                title   : 'character',
+                content : './pages/reference/character.md'
+              },
+              { 
+                title   : 'character.actions',
+                content : './pages/reference/character.actions.md'
+              }
+            ]
+          },
+          {
+            title : 'Hooks',
+            pages : [
+              { 
+                title   : 'Actions',
+                content : './pages/hooks/actions.md'
+              },
+              { 
+                title   : 'Filters',
+                content : './pages/hooks/filters.md'
+              }
+            ]
+          },
+          {
+            title : 'Examples',
+            pages : [
+              { 
+                title   : 'Quick start',
+                content : './pages/examples/quick-start.md'
+              },
+              {
+                title   : 'Discount Elysium',
+                content : './pages/examples/discount-elysium.md'
+              }
+            ]
+          }
+        ]
+      })
+    </script>
+  </body>
+</html>

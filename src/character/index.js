@@ -10,7 +10,7 @@ const add = (app, character, callback) => {
       speed: {
         run: 0.5,
         walk: 0.1,
-        ...character.attributes
+        ...(character?.attributes?.speed ?? {})
       },
       ...(character.attributes ?? {})
     }

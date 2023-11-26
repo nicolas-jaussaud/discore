@@ -21,7 +21,7 @@ const mouseEvents = app => {
      */
     const character =  collideWithCharacter(app)
     if( character ) {
-      app.hooks.doAction('clickOnCharacter', character)
+      app.hooks.doAction('clickOnCharacter', { character: character })
       return;
     }
 
@@ -46,7 +46,7 @@ const mouseEvents = app => {
 
     const character =  collideWithCharacter(app)
     if( character ) {
-      app.hooks.doAction('mouseOnCharacter', character)
+      app.hooks.doAction('mouseOnCharacter', { character: character })
       document.body.style.cursor = 'help'
       return;
     }

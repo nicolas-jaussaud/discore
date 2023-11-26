@@ -37,6 +37,7 @@ const init = ({
 
   const app = {
     loading     : loading,
+    renderer    : renderer,
     status      : 'started',
     environment : 'live',
     hooks       : initHooks(),
