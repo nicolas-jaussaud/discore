@@ -10,6 +10,7 @@ More information about how to interact with actions in the [app.hooks reference 
 - [beforeRender](#beforerender)
 - [characterMoved](#charactermoved)
 - [clickOnCharacter](#clickoncharacter)
+- [loadComplete](#loadcomplete)
 - [mouseOnCharacter](#mouseoncharacter)
 - [mapLoaded](#maploaded)
 
@@ -45,6 +46,14 @@ app.hooks.addAction('characterMoved', ({ character }) => {
 Called each time the user click on a character, pass [character object](./pages/reference/character.md) as parameter:
 ```javascript
 app.hooks.addAction('clickOnCharacter', ({ character }) => {
+  // ...
+})
+```
+
+##### **loadComplete**
+Called when all the objects we rely on for the current map have been fetched and imported to the scene:
+```javascript
+app.hooks.addAction('loadComplete', () => {
   // ...
 })
 ```

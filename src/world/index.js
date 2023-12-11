@@ -39,9 +39,9 @@ const hasCollisions = (app, item) => {
 }
 
 const init = app => ({
-  objects: [],
-  add: (name, args, callback) => add(app, name, args, callback),
-  hasCollisions: object => hasCollisions(app, object)
+  objects       : [],
+  add           : (name, args, callback) => add(app, name, args, callback),
+  hasCollisions : object => hasCollisions(app, object)
 })
 
 export { init }

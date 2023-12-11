@@ -11,7 +11,7 @@ import { init as initMap } from '../map'
 import { init as initCharacter } from '../character'
 import { init as initControls } from '../controls'
 import { init as initLoaders } from '../import'
-import { init as initLoading } from './loading'
+import { init as initLoading } from './loading/'
 
 const init = ({
   element,
@@ -33,10 +33,8 @@ const init = ({
   )
 
   element.appendChild(renderer.domElement)
-  const loading = initLoading(element)
 
   const app = {
-    loading     : loading,
     renderer    : renderer,
     status      : 'started',
     environment : 'live',
@@ -69,12 +67,15 @@ const init = ({
       }
     }
   }
+
+  app.loading = initLoading(app, element)
+  app.loading.set('app', false)
   
   app.map = initMap(app, squareSize)
   app.loaders = initLoaders(app)
   app.characters = initCharacter(app)
 
-  camera.position.set( 0, 0, 800 )
+  camera.position.set( 0, 0, 600 )
   app.view.set('orthographic')
 
   app.render = () => render(app, renderer)
@@ -83,7 +84,7 @@ const init = ({
   app.world = initWorld(app)
 
   const removeLoading = () => {
-    app.loading.set(false)
+    app.loading.set('app', true)
     app.controls = initControls(app)
     app.hooks.removeAction('afterRender', removeLoading)
   }

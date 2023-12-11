@@ -3,6 +3,7 @@ import { Scene } from 'three'
 const load = (app, name, squares, initialSquare) => {
 
   const character = app.characters.getMain()
+  app.loading.set('map', false)
 
   if( character.actions.currentAction ) {
     character.actions.currentAction = false
@@ -14,6 +15,7 @@ const load = (app, name, squares, initialSquare) => {
       name : name, 
       map  : app.map.maps[name] 
     })
+    app.loading.set('map', true)
   }
   
   if( app.map.maps[name] ) {

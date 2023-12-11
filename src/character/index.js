@@ -2,6 +2,7 @@ import { loadAnimations } from './animation'
 import { init as initActions } from './actions'
 
 const add = (app, character, callback) => {
+  app.loading.set(`character: ${character.name}`, false)
   app.loaders.load(character.file, object => {
 
     character.object = object
@@ -21,6 +22,7 @@ const add = (app, character, callback) => {
       app.characters.list[ character.name ] = character
       
       callback(character)
+      app.loading.set(`character: ${character.name}`, true)
     })
   })
 }
