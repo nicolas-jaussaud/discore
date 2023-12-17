@@ -1,3 +1,4 @@
+import { materials } from './materials' 
 import { 
   Box3, 
   Vector3
@@ -33,7 +34,6 @@ const hasCollisions = (app, item) => {
     const collision = objectHitBox.intersectsBox(hitBox)
 
     if( collision ) hasCollision = object
-
   })
 
   return hasCollision
@@ -42,7 +42,8 @@ const hasCollisions = (app, item) => {
 const init = app => ({
   objects       : [],
   add           : (name, args, callback) => add(app, name, args, callback),
-  hasCollisions : object => hasCollisions(app, object)
+  hasCollisions : object => hasCollisions(app, object),
+  materials     : materials(app)
 })
 
 export { init }

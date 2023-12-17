@@ -21,8 +21,10 @@ const init = ({
   squareSize = 200
 }) => {
   
-  const renderer = new WebGLRenderer()
+  const renderer = new WebGLRenderer({ antialias: true })
+
   renderer.setSize(width, height)
+  renderer.shadowMap.enabled = true
 
   const camera = new OrthographicCamera(
     width / -2, 

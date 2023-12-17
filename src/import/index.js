@@ -22,6 +22,20 @@ const load = async (app, name, callback = false) => {
   app.loading.set(`file: ${name}`, true)
 
   const isLoaded = object => {
+
+    const enabledShadows = object => {
+
+      if( object.isObject3D ) {
+        object.castShadow = true
+        object.receiveShadow = true
+      }
+
+      if( ! object.children ) return;
+
+      object.children.map(enabledShadows)
+    }
+    
+    enabledShadows(object)
     if( callback ) callback(object)
     app.loading.set(`file: ${name}`, true)
   }
