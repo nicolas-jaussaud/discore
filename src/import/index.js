@@ -12,7 +12,7 @@ const init = app => {
     fbx   : new FBXLoader(manager),
     mtl   : new MTLLoader(manager),
     obj   : new OBJLoader(manager),
-    debug : app.environment !== 'dev',
+    debug : app.environment === 'development',
     load  : (name, callback = false) => load(app, name, callback)
   }
 }

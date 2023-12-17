@@ -12,6 +12,7 @@ import { init as initCharacter } from '../character'
 import { init as initControls } from '../controls'
 import { init as initLoaders } from '../import'
 import { init as initLoading } from './loading/'
+import { init as initDebug } from './debug'
 
 const init = ({
   element,
@@ -37,7 +38,7 @@ const init = ({
   const app = {
     renderer    : renderer,
     status      : 'started',
-    environment : 'live',
+    environment : process.env.NODE_ENV ?? 'production',
     hooks       : initHooks(),
     camera      : camera,
     clock       : new Clock(),
@@ -66,6 +67,10 @@ const init = ({
         }
       }
     }
+  }
+
+  if( app.environment === 'development' ) {
+    initDebug(app)
   }
 
   app.loading = initLoading(app, element)

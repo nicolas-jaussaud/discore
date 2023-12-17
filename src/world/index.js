@@ -1,6 +1,6 @@
 import { 
   Box3, 
-  Vector3 
+  Vector3
 } from 'three'
 
 const add = (app, name, args, callback) => {
@@ -19,23 +19,24 @@ const add = (app, name, args, callback) => {
  */
 const hasCollisions = (app, item) => {
 
- let hasCollision = false
- 
- const objectHitBox = item instanceof Vector3 
-  ? new Box3().setFromCenterAndSize(item, new Vector3(50, 50, 50))
-  : new Box3().setFromObject(object)
+  let hasCollision = false
 
- app.map.current.objects.map(object => {
-
-  if( object.walkable || hasCollision ) return;
-
-  const hitBox = new Box3().setFromObject(object)
-  const collision = objectHitBox.intersectsBox(hitBox)
+  const objectHitBox = item instanceof Vector3 
+    ? new Box3().setFromCenterAndSize(item, new Vector3(50, 50, 50))
+    : new Box3().setFromObject(item)
   
-  if( collision ) hasCollision = object
- })
+  app.map.current.objects.map(object => {
 
- return hasCollision
+    if( object.walkable || hasCollision ) return;
+
+    const hitBox = new Box3().setFromObject(object)
+    const collision = objectHitBox.intersectsBox(hitBox)
+
+    if( collision ) hasCollision = object
+
+  })
+
+  return hasCollision
 }
 
 const init = app => ({
