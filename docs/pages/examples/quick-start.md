@@ -27,9 +27,9 @@ app.map.registerSquareType('colored-plane', {
   render   : ({ scene, coordinates, app, config }) => {
   
     const geometry = new THREE.PlaneGeometry(
-    app.map.squareSize, 
-    app.map.squareSize
-  )
+      app.map.squareSize, 
+      app.map.squareSize
+    )
   
     const material = new THREE.MeshBasicMaterial({ 
       color: config.color,

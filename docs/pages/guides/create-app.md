@@ -4,7 +4,7 @@
 
 #### Initialization
 
-Apps are initilized by using the `discore.init()` function, which will retun an `app` object. 
+Apps are initialized by using the `discore.init()` function, which will return an `app` object. 
 
 The app object will handle most of the interactions between your code and the discore library. To learn more about how to interact with the `app` object, see [the associated reference page](./pages/reference/app.md).
 

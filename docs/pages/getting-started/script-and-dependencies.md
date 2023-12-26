@@ -4,7 +4,7 @@
 
 #### Discore script
 
-Currently, the only way to use discore is to required the build script:
+Currently, the only way to use discore is to require the build script:
 ```html
 <script src="https://nicolas-jaussaud.github.io/discore/build/discore.min.js"></script>
 ```

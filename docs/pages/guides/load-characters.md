@@ -10,7 +10,7 @@
 #### Import 3D assets
 
 To add a new character into your discore app, you need to load:
-- The 3D file of you character (the supported format are FBX and OBJ/MTL)
+- The 3D file of your character (the supported format are FBX and OBJ/MTL)
 - The associated animations. You can add as many animations as you want, but the following ones are required:
   - idle 
   - run
@@ -18,7 +18,7 @@ To add a new character into your discore app, you need to load:
 
 A good place to get animations (and/or a 3D file for your characters) would be [mixamo](https://www.mixamo.com/).
 
-Here is a minimal example of how you can load a character into your discourse app (regardless of if it's the main character or not):
+Here is a minimal example of how you can load a character into your discore app (regardless of if it's the main character or not):
 ```javascript
 app.characters.add({
   name       : 'character-name',

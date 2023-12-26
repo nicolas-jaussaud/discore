@@ -1,4 +1,4 @@
-import { materials } from './materials' 
+import { cache } from './cache' 
 import { 
   Box3, 
   Vector3
@@ -43,7 +43,7 @@ const init = app => ({
   objects       : [],
   add           : (name, args, callback) => add(app, name, args, callback),
   hasCollisions : object => hasCollisions(app, object),
-  materials     : materials(app)
+  cache         : cache(app)
 })
 
 export { init }
