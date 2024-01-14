@@ -7,13 +7,32 @@ import {
 const add = (app, name, args, callback) => {
   app.loaders.load(name, 
     object => {
-
-      object.walkable = args.walkable ?? false
-      app.map.current.objects.push(object)
-      
-      callback(object)
+      callback(
+        app.world.registerObject(object, args)
+      )
   })
 }
+
+const registerObject = (app, object, args = []) => {
+  
+  const action = () => {
+    
+    object.walkable = args.walkable ?? false
+    app.map.current.objects.push(object) 
+    
+    app.hooks.removeAction('mapLoaded', action)
+    
+    return object
+  }
+  
+  // Too early
+  if( ! app.map.current.objects ) {
+    app.hooks.addAction('mapLoaded', action)
+    return object 
+  }
+
+  return action()
+} 
 
 /**
  * @see https://discourse.threejs.org/t/avoiding-collision-between-two-boxes/11235/9
@@ -21,10 +40,12 @@ const add = (app, name, args, callback) => {
 const hasCollisions = (app, item) => {
 
   let hasCollision = false
+  let objectHitBox = false
 
-  const objectHitBox = item instanceof Vector3 
-    ? new Box3().setFromCenterAndSize(item, new Vector3(50, 50, 50))
-    : new Box3().setFromObject(item)
+  if( item instanceof Box3 ) objectHitBox = item 
+  else objectHitBox = item instanceof Vector3 
+      ? new Box3().setFromCenterAndSize(item, new Vector3(50, 50, 50))
+      : new Box3().setFromObject(item)
   
   app.map.current.objects.map(object => {
 
@@ -40,10 +61,11 @@ const hasCollisions = (app, item) => {
 }
 
 const init = app => ({
-  objects       : [],
-  add           : (name, args, callback) => add(app, name, args, callback),
-  hasCollisions : object => hasCollisions(app, object),
-  cache         : cache(app)
+  objects        : [],
+  add            : (name, args, callback) => add(app, name, args, callback),
+  hasCollisions  : object => hasCollisions(app, object),
+  registerObject : (object, args = []) => registerObject(app, object, args),
+  cache          : cache(app)
 })
 
 export { init }

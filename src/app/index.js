@@ -72,7 +72,7 @@ const init = ({
   }
 
   if( app.environment === 'development' ) {
-    initDebug(app)
+    app.debug = initDebug(app)
   }
 
   app.loading = initLoading(app, element)

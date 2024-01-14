@@ -1,10 +1,14 @@
 import { createMap } from './create'
+import { searchPath } from './path/'
 import {
+  getSquare,
   moveCharacterOnSquare,
   getCoordinateBySquare,
   registerSquareType,
   getSquareType,
-  getSquareByCoordinates
+  getSquareByCoordinates,
+  isSquareWalkable,
+  isNeighborsWalkable
 } from './helpers'
 
 const load = (app, name, squares, initialSquare) => {
@@ -36,7 +40,7 @@ const load = (app, name, squares, initialSquare) => {
     return; 
   }
   
-  const map = createMap(app, squares)
+  const map = createMap(app, name, squares)
   map.load()
   
   app.map = {
@@ -59,9 +63,13 @@ const init = (app, squareSize) => ({
   squareTypes           : [],
   squareSize            : squareSize,
   load                  : (name, map, initialSquare) => load(app, name, map, initialSquare),
+  getSquare             : key => getSquare(app, key),
   registerSquareType    : (type, square) => registerSquareType(app, type, square),
   moveCharacterOnSquare : (key, character) => moveCharacterOnSquare(app, key, character),
-  getCoordinateBySquare : key => getCoordinateBySquare(app, key)
+  getCoordinateBySquare : key => getCoordinateBySquare(app, key),
+  isSquareWalkable      : key => isSquareWalkable(app, key),
+  isNeighborsWalkable   : (key, position) => isNeighborsWalkable(app, key, position),
+  searchPath            : (currentPosition, targetPosition) => searchPath(app, currentPosition, targetPosition)
 })
 
 export { init }

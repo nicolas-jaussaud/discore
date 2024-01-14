@@ -1,8 +1,9 @@
 import { Scene } from 'three'
 
-const createMap = (app, squares) => {
+const createMap = (app, name, squares) => {
 
   const map = {
+    name    : name,
     scene   : false,
     squares : squares,
     objects : []
