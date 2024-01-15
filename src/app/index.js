@@ -18,7 +18,8 @@ const init = ({
   element,
   width = window.innerWidth,
   height = window.innerHeight,
-  squareSize = 200
+  squareSize = 200,
+  environment = process.env.NODE_ENV
 }) => {
   
   const renderer = new WebGLRenderer({ antialias: true })
@@ -31,8 +32,8 @@ const init = ({
     width / 2, 
     height / 2, 
     height / -2, 
-    1, 
-    1600
+    0, 
+    2000
   )
 
   element.appendChild(renderer.domElement)
@@ -40,7 +41,7 @@ const init = ({
   const app = {
     renderer    : renderer,
     status      : 'started',
-    environment : process.env.NODE_ENV ?? 'production',
+    environment : environment,
     hooks       : initHooks(),
     camera      : camera,
     clock       : new Clock(),
@@ -82,7 +83,8 @@ const init = ({
   app.loaders = initLoaders(app)
   app.characters = initCharacter(app)
 
-  camera.position.set( 0, 0, 600 )
+  // Z has to be 1.5* the x and y value in render (shouldn't be hardcoded)
+  camera.position.set( 0, 0, 900 )
   app.view.set('orthographic')
 
   app.render = () => render(app, renderer)
@@ -97,6 +99,21 @@ const init = ({
   }
   app.hooks.addAction('afterRender', removeLoading)
   
+  /**
+   * Usefull if width and height are window size, and there is a resize event 
+   */
+  app.updateSize = (width, height) => {
+
+    app.camera.aspect = width / height    
+    app.camera.left = width / - 2
+    app.camera.right = width / 2
+    app.camera.top = height / 2
+    app.camera.bottom = height / - 2
+
+    app.camera.updateProjectionMatrix()
+    app.renderer.setSize(width, height)
+  }
+
   return app
 }
 

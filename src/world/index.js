@@ -1,4 +1,5 @@
 import { cache } from './cache' 
+import { remove } from './helpers'
 import { 
   Box3, 
   Vector3
@@ -65,7 +66,8 @@ const init = app => ({
   add            : (name, args, callback) => add(app, name, args, callback),
   hasCollisions  : object => hasCollisions(app, object),
   registerObject : (object, args = []) => registerObject(app, object, args),
-  cache          : cache(app)
+  cache          : cache(app),
+  remove         : object => remove(app, object)
 })
 
 export { init }

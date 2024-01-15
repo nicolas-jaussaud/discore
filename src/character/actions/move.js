@@ -5,7 +5,7 @@ import {
   BufferGeometry
 } from 'three'
 
-const move = (app, coordinates, character, type) => {
+const move = async (app, coordinates, character, type) => {
 
   const speed = character.attributes.speed[ type ]
   const action = character.actions.move
@@ -28,7 +28,7 @@ const move = (app, coordinates, character, type) => {
 
   if( app.environment === 'development' ) {
 
-    console.info(`Path finding to doSomething took ${performance.now() - startTime} milliseconds`)
+    console.info(`Path finding for ${character.name} took ${performance.now() - startTime} milliseconds`)
 
     if( app.debug.path ) app.debug.path.removeFromParent()
     

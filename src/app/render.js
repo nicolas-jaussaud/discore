@@ -17,8 +17,8 @@ const render = (app, renderer) => {
     const camera = app.camera
 
     if( app.view.current === 'orthographic' ) {
-      camera.position.x = characterPostion.x + 400
-      camera.position.y = characterPostion.y - 400
+      camera.position.x = characterPostion.x + 600
+      camera.position.y = characterPostion.y - 600
     }
     else if( app.view.current === 'top' ) {
       camera.position.x = characterPostion.x

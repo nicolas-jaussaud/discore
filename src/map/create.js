@@ -5,8 +5,7 @@ const createMap = (app, name, squares) => {
   const map = {
     name    : name,
     scene   : false,
-    squares : squares,
-    objects : []
+    squares : squares
   }
 
   map.load = () => {
@@ -14,15 +13,11 @@ const createMap = (app, name, squares) => {
     map.scene.add(app.camera)
     map.scene.add(app.characters.getMain().object)
     app.lights.map(light => map.scene.add(light))
+    map.objects = []
     map.generateSquares()
   }
 
-  map.unload = () => {
-    while( map.scene.children.length > 0 ) {
-      map.scene.remove(map.scene.children[0]) 
-    }
-    map.scene = false
-  }
+  map.unload = () => unloadMap(app, map)
   
   map.generateSquares = () => {
     for( const key in squares ) {
@@ -53,6 +48,24 @@ const createMap = (app, name, squares) => {
   }
 
   return map
+}
+
+const unloadMap = (app, map) => {
+
+  map.objects.forEach(object => app.world.remove(object))
+  
+  const characters = app.characters.getAll()
+  for( const name in characters ) {
+
+    const character = characters[ name ]
+
+    if( character.name !== app.characters.getMain().name ) {
+      app.world.remove(character.object)
+    }
+  }
+
+  delete map.objects
+  map.scene = false   
 }
 
 export { createMap }

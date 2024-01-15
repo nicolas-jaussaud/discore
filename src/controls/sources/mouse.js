@@ -12,7 +12,7 @@ const mouseEvents = app => {
   /**
    * Get position from the click event, and move the main character to this position
    */
-  window.addEventListener('click', e => {
+  window.addEventListener('click', async e => {
     
     if( ! initRaycasterFromEvent(app, e) ) return;
 
