@@ -6,7 +6,7 @@ import { getPathMap } from './map'
  */
 const searchPath = (app, currentPosition, targetPosition) => {
 
-  const pathMap = structuredClone(getPathMap(app))
+  const pathMap = getPathMap(app)
 
   const startNode = getClosestNode(app, currentPosition, pathMap)
   const targetNode = getClosestNode(app, targetPosition, pathMap)
