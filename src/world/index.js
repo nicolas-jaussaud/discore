@@ -1,4 +1,5 @@
 import { cache } from './cache' 
+import { instance } from './instances' 
 import { remove } from './helpers'
 import { 
   Box3, 
@@ -67,6 +68,7 @@ const init = app => ({
   hasCollisions  : object => hasCollisions(app, object),
   registerObject : (object, args = []) => registerObject(app, object, args),
   cache          : cache(app),
+  instance       : instance(app),
   remove         : object => remove(app, object)
 })
 

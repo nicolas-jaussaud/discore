@@ -26,6 +26,7 @@ const init = ({
 
   renderer.setSize(width, height)
   renderer.shadowMap.enabled = true
+  renderer.setPixelRatio( window.devicePixelRatio )
 
   const camera = new OrthographicCamera(
     width / -2, 

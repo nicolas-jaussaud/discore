@@ -2,11 +2,10 @@ import Stats from 'stats.js'
 import { 
   AxesHelper, 
   BoxHelper,
-  PointsMaterial,
-  BufferGeometry,
-  BufferAttribute,
-  Points
+  MeshBasicMaterial,
+  PlaneGeometry
 } from 'three'
+import { getPathMap } from '../map/path/map'
 
 const init = app => {
 
@@ -60,22 +59,40 @@ const init = app => {
     }
   })
 
+  /**
+   * Make pathMap visible
+   * 
+   * @see ./map/path/map.js
+   */
+  app.hooks.addAction('loadComplete', () => {
+    
+    const pathMap = getPathMap(app)
+    
+    for( const key in pathMap ) {
+      app.debug.addPoint(
+        { ...pathMap[ key ].coordinates, z: 0 }, 
+        'path'
+      )
+    }
+    app.world.instance.render(
+      `_debug-point-path`,
+      app.map.current.scene
+    )
+  })
+
   return {
     addPoint : (position, size) => addPoint(app, position, size)
   }
 }
 
-const addPoint = (app, position, size = 1) => {
+const addPoint = (app, position, type = 'default') => {
   
-  const material = new PointsMaterial({ size: size, color: 0xffa500 })
-  const geometry = new BufferGeometry()
+  const material = new MeshBasicMaterial({ color: 0xffa500 })
+  const geometry = new PlaneGeometry(3, 3)
   
-  geometry.setAttribute(
-    'position', 
-    new BufferAttribute( new Float32Array([ position.x, position.y, position.z ]), 3 )
-  )
-
-  const dot = new Points(geometry, material)
-  app.map.current.scene.add(dot)
+  app.world.instance.add(`_debug-point-${type}`, geometry, material, { 
+    position: { x: position.x, y: position.y, z: 1 }
+  })
 }
+
 export { init }

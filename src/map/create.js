@@ -15,6 +15,7 @@ const createMap = (app, name, squares) => {
     app.lights.map(light => map.scene.add(light))
     map.objects = []
     map.generateSquares()
+    app.world.instance.init(map.scene)
   }
 
   map.unload = () => unloadMap(app, map)
@@ -66,6 +67,7 @@ const unloadMap = (app, map) => {
 
   delete map.objects
   map.scene = false   
+  app.world.instance.reset()
 }
 
 export { createMap }

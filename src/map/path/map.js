@@ -178,12 +178,6 @@ const getPathMap = app => (
         )
       ))
 
-    if( app.environment === 'development' ) {
-      nodes.map(
-        node => app.debug.addPoint({ ...node, z: 0 }, 3)
-      )
-    }
-
     /**
      * Convert array to object, name of each node will be {x}|{y} 
      * Also prepare for A* by adding neigbours for each node
