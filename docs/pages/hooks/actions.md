@@ -11,7 +11,9 @@ More information about how to interact with actions in the [app.hooks reference 
 - [characterMoved](#charactermoved)
 - [clickOnCharacter](#clickoncharacter)
 - [loadComplete](#loadcomplete)
+- [mouseEnterCharacter](#mouseentercharacter)
 - [mouseOnCharacter](#mouseoncharacter)
+- [mouseLeaveCharacter](#mouseleavecharacter)
 - [mapLoaded](#maploaded)
 
 #### List
@@ -58,10 +60,26 @@ app.hooks.addAction('loadComplete', () => {
 })
 ```
 
+##### **mouseEnterCharacter**
+Called when the mouse is on the character (won't be called again until the mouse leaves the current character), pass [character object](./pages/reference/character.md) as parameter:
+```javascript
+app.hooks.addAction('mouseEnterCharacter', ({ character }) => {
+  // ...
+})
+```
+
 ##### **mouseOnCharacter**
-Called each time the user mouse is on a character, pass [character object](./pages/reference/character.md) as parameter:
+Called on each render when the mouse is on a character, pass [character object](./pages/reference/character.md) as parameter:
 ```javascript
 app.hooks.addAction('mouseOnCharacter', ({ character }) => {
+  // ...
+})
+```
+
+##### **mouseLeaveCharacter**
+Called when the mouse is not on a character anymore, pass [character object](./pages/reference/character.md) as parameter:
+```javascript
+app.hooks.addAction('mouseLeaveCharacter', ({ character }) => {
   // ...
 })
 ```

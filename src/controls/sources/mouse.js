@@ -38,20 +38,46 @@ const mouseEvents = app => {
     )
   })
 
+  let current = false
   window.addEventListener('mousemove', e => {
 
     document.body.style.cursor = ''
 
     if( ! initRaycasterFromEvent(app, e) ) return;
 
-    const character =  collideWithCharacter(app)
-    if( character ) {
-      app.hooks.doAction('mouseOnCharacter', { character: character })
-      document.body.style.cursor = 'help'
+    const character = collideWithCharacter(app)
+
+    if( current && character.name !== current.character.name ) {
+      current.out()
+    }
+
+    if( ! current && character ) {
+      current = {
+        character : character,
+        init      : () => {
+          app.hooks.doAction('mouseEnterCharacter', { character: current.character })
+          app.hooks.addAction('afterRender', current.watch)
+        },
+        out       : () => {
+          app.hooks.doAction('mouseLeaveCharacter', { character: current.character })
+          app.hooks.removeAction('afterRender', current.watch)
+          current = false
+        },
+        watch     : () => {
+          const collide = collideWithCharacter(app)
+          if( collide && collide.name === current.character.name ) {
+            document.body.style.cursor = 'help'
+            app.hooks.doAction('mouseOnCharacter', { character: current.character })
+            return;
+          }
+          current.out()
+        }
+      }
+      current.init()
       return;
     }
 
-    if( ! collideWithWalkableArea(app) ) {
+    if( ! current && ! collideWithWalkableArea(app) ) {
       document.body.style.cursor = 'not-allowed'
     }
   })
