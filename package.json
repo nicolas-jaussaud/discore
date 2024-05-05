@@ -10,6 +10,6 @@
     "three": "^0.146.0"
   },
   "devDependencies": {
-    "@tangible/roller": "^1.2.1"
+    "@tangible/roller": "^1.8.1"
   }
 }

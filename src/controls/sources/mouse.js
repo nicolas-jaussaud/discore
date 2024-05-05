@@ -80,6 +80,7 @@ const mouseEvents = app => {
     if( ! current && ! collideWithWalkableArea(app) ) {
       document.body.style.cursor = 'not-allowed'
     }
+
   })
 }
 
@@ -103,11 +104,12 @@ const initRaycasterFromEvent = (app, e) => {
 const collideWithCharacter = app => {
 
   const characters = app?.characters.getAll()
+  const hitBox = new Box3()
 
   for( const name in characters ) {      
     
     const character = characters[ name ]
-    const hitBox = new Box3().setFromObject(character.object)
+    hitBox.setFromObject(character.object)
 
     if( raycaster.ray.intersectsBox(hitBox) ) return character;
   }

@@ -14,8 +14,8 @@ const createMap = (app, name, squares) => {
     map.scene.add(app.characters.getMain().object)
     app.lights.map(light => map.scene.add(light))
     map.objects = []
-    map.generateSquares()
     app.world.instance.init(map.scene)
+    map.generateSquares()
   }
 
   map.unload = () => unloadMap(app, map)

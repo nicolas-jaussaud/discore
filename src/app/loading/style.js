@@ -18,7 +18,8 @@ export default {
     fontSize       : '15px',
     maxHeight      : '50vh',
     overflow       : 'auto',
-    textAlign      : 'left'
+    textAlign      : 'left',
+    padding        : '0 20px'
   },
   loaded : {
     listStyle      : 'none',

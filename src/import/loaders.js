@@ -43,8 +43,23 @@ const mtl = async (app, path , callback = false) => (
   )
 )
 
+const ktx2 = async (app, path , callback = false) => (
+  app.loaders.ktx2.load(path, 
+    ktx2 => {
+      
+      ktx2.castShadow    = true
+      ktx2.receiveShadow = true
+
+      if(callback) callback(ktx2)
+    },
+    xhr   => app.loaders.debug ? console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' ) : '',
+    error => app.loaders.debug ? console.error('An error happened: ' + error) : ''
+  )
+)
+
 export {
   fbx,
   mtl,
-  obj
+  obj,
+  ktx2
 }

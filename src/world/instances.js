@@ -24,9 +24,16 @@ const instance = app => ({
     app.world.instance.loaded[ key ].instances.push( config ) 
   },
   init  : scene => {
-    for( const key in app.world.instance.loaded ) {
-      app.world.instance.render(key, scene)
+
+    app.world.instance.initAction = () => {
+      for( const key in app.world.instance.loaded ) {
+        app.world.instance.render(key, scene)
+      }
+
+      app.hooks.removeAction('loadComplete', app.world.instance.initAction)
     }
+
+    app.hooks.addAction('loadComplete', app.world.instance.initAction)
   },
   render : (key, scene = false) => {
 
@@ -52,12 +59,11 @@ const instance = app => ({
       
       if( position ) dummy.position.set( position.x, position.y, position.z )
       if( rotation ) dummy.rotation.set( rotation.x, rotation.y, rotation.z )
-      dummy.updateMatrix()
 
+      dummy.updateMatrix()
       mesh.setMatrixAt( i, dummy.matrix )
     } 
 
-    mesh.instanceMatrix.needsUpdate = true
     scene.add( mesh )
 
     for ( let i = 0; i < instances.length; i ++ ) {
