@@ -1,6 +1,6 @@
 import Stats from 'stats.js'
-import { 
-  AxesHelper, 
+import {
+  AxesHelper,
   BoxHelper,
   MeshBasicMaterial,
   PlaneGeometry
@@ -18,27 +18,27 @@ const init = app => {
   stats.dom.childNodes.forEach(
     node => node.style.display = 'initial'
   )
-  
+
   app.hooks.addAction('beforeRender', stats.begin)
   app.hooks.addAction('afterRender', stats.end)
-  
+
   /**
    * @see https://threejs.org/docs/#api/en/helpers/AxesHelper
    */
   app.hooks.addAction('mapLoaded', () => {
-    app.map.current.scene.add( 
-      new AxesHelper(window.innerHeight) 
+    app.map.current.scene.add(
+      new AxesHelper(window.innerHeight)
     )
   })
 
   /**
    * Visible hitboxes for world and character objects
-   *   
+   *
    * @see https://threejs.org/docs/#api/en/helpers/BoxHelper
    */
   const boxes = {}
   const action = object => {
-      
+
     if( boxes[object.uuid] ) {
       return boxes[object.uuid].update()
     }
@@ -61,16 +61,16 @@ const init = app => {
 
   /**
    * Make pathMap visible
-   * 
+   *
    * @see ./map/path/map.js
    */
   app.hooks.addAction('loadComplete', () => {
-    
+
     const pathMap = getPathMap(app)
-    
+
     for( const key in pathMap ) {
       app.debug.addPoint(
-        { ...pathMap[ key ].coordinates, z: 0 }, 
+        { ...pathMap[ key ].coordinates, z: 0 },
         'path'
       )
     }
@@ -86,11 +86,11 @@ const init = app => {
 }
 
 const addPoint = (app, position, type = 'default') => {
-  
+
   const material = new MeshBasicMaterial({ color: 0xffa500 })
   const geometry = new PlaneGeometry(3, 3)
-  
-  app.world.instance.add(`_debug-point-${type}`, geometry, material, { 
+
+  app.world.instance.add(`_debug-point-${type}`, geometry, material, {
     position: { x: position.x, y: position.y, z: 1 }
   })
 }

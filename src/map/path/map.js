@@ -5,8 +5,6 @@ import {
 
 const getPathMap = app => (
   app.world.cache.get(`_path-map-${app.map.current.name}`, () => {
-    
-    app.loading.set(`path-map: ${app.map.current.name}`, false)
 
     const nodeDistance = app.map.squareSize / 16
 
@@ -15,15 +13,15 @@ const getPathMap = app => (
      * Use to remove node when collisions/unallowed square next
      */
     const characterDimensions = app.world.cache.get('_main-character-max-obstacle-distance', () => {
-          
+
       const characterHitBox = new Box3().setFromObject(app.characters.getMain().object)
       const size = {
         x: characterHitBox.max.x - characterHitBox.min.x,
         y: characterHitBox.max.y - characterHitBox.min.y,
         z: characterHitBox.max.z - characterHitBox.min.z
       }
-      
-      size.x = Math.max(size.x, size.y) * 1.5  
+
+      size.x = Math.max(size.x, size.y) * 1.5
       size.y = Math.max(size.x, size.y) * 1.5
 
       return size
@@ -39,38 +37,38 @@ const getPathMap = app => (
         ...nodes,
         center,
         ...(
-          [ 
+          [
             nodeDistance,
-            nodeDistance * 2, 
-            nodeDistance * 3, 
-            nodeDistance * 4, 
-            nodeDistance * 5, 
-            nodeDistance * 6, 
-            nodeDistance * 7, 
-            nodeDistance * 8 
+            nodeDistance * 2,
+            nodeDistance * 3,
+            nodeDistance * 4,
+            nodeDistance * 5,
+            nodeDistance * 6,
+            nodeDistance * 7,
+            nodeDistance * 8
           ].reduce((nodes, maxPosition, row) => {
-            
+
             /**
              * On a side where the neigbours square is not walkable, we can only start
              * adding nodes if the distance between the side is and the node is superior
-             * to character hitbox / 2 
+             * to character hitbox / 2
              */
-            const distanceFromSide = (app.map.squareSize / 2) - maxPosition 
+            const distanceFromSide = (app.map.squareSize / 2) - maxPosition
             const safeFromSide = distanceFromSide > (characterDimensions.x / 2)
             const isSideSafe = {
-              top         : safeFromSide || app.map.isNeighborsWalkable(center, 'top'), 
-              bottom      : safeFromSide || app.map.isNeighborsWalkable(center, 'bottom'), 
-              right       : safeFromSide || app.map.isNeighborsWalkable(center, 'right'), 
+              top         : safeFromSide || app.map.isNeighborsWalkable(center, 'top'),
+              bottom      : safeFromSide || app.map.isNeighborsWalkable(center, 'bottom'),
+              right       : safeFromSide || app.map.isNeighborsWalkable(center, 'right'),
               left        : safeFromSide || app.map.isNeighborsWalkable(center, 'left'),
-              topLeft     : safeFromSide || app.map.isNeighborsWalkable(center, 'top-left'), 
-              topRight    : safeFromSide || app.map.isNeighborsWalkable(center, 'top-right'), 
-              bottomLeft  : safeFromSide || app.map.isNeighborsWalkable(center, 'bottom-left'), 
-              bottomRight : safeFromSide || app.map.isNeighborsWalkable(center, 'bottom-right'), 
+              topLeft     : safeFromSide || app.map.isNeighborsWalkable(center, 'top-left'),
+              topRight    : safeFromSide || app.map.isNeighborsWalkable(center, 'top-right'),
+              bottomLeft  : safeFromSide || app.map.isNeighborsWalkable(center, 'bottom-left'),
+              bottomRight : safeFromSide || app.map.isNeighborsWalkable(center, 'bottom-right'),
             }
 
             /**
              * Side and center nodes on the current position:
-             * 
+             *
              *  x . . x . . x
              *  . . . . . . .
              *  . . . . . . .
@@ -84,7 +82,7 @@ const getPathMap = app => (
               nodes.push({ x: center.x              , y: center.y + maxPosition })
             }
             if( isSideSafe.top && isSideSafe.left && isSideSafe.topLeft ) {
-              nodes.push({ x: center.x - maxPosition, y: center.y + maxPosition })            
+              nodes.push({ x: center.x - maxPosition, y: center.y + maxPosition })
             }
             if( isSideSafe.top && isSideSafe.right && isSideSafe.topRight ) {
               nodes.push({ x: center.x + maxPosition, y: center.y + maxPosition })
@@ -93,7 +91,7 @@ const getPathMap = app => (
               nodes.push({ x: center.x              , y: center.y - maxPosition })
             }
             if( isSideSafe.bottom && isSideSafe.left && isSideSafe.bottomLeft ) {
-              nodes.push({ x: center.x - maxPosition, y: center.y - maxPosition })            
+              nodes.push({ x: center.x - maxPosition, y: center.y - maxPosition })
             }
             if( isSideSafe.bottom && isSideSafe.right && isSideSafe.bottomRight ) {
               nodes.push({ x: center.x + maxPosition, y: center.y - maxPosition })
@@ -107,7 +105,7 @@ const getPathMap = app => (
 
             /**
              * Nodes between center and sides:
-             * 
+             *
              *  . x x . x x .
              *  x . . . . . x
              *  x . . . . . x
@@ -118,21 +116,21 @@ const getPathMap = app => (
              */
             return Array.from(Array(row).keys())
               .reduce((nodes, empty, offset) => {
-                
+
                 /**
-                 * I don't remembed anymore why I need offset + 1 then offset + 2, and I 
+                 * I don't remembed anymore why I need offset + 1 then offset + 2, and I
                  * hope nobody will ever ask me to explain that
                  */
                 const position = nodeDistance * (offset + 1)
                 const safePosition = (maxPosition - nodeDistance * (offset + 2)) < characterDimensions.x / 2
                 const isPositionSafe = {
                   top         : isSideSafe.top         || safePosition,
-                  bottom      : isSideSafe.bottom      || safePosition, 
-                  right       : isSideSafe.right       || safePosition, 
+                  bottom      : isSideSafe.bottom      || safePosition,
+                  right       : isSideSafe.right       || safePosition,
                   left        : isSideSafe.left        || safePosition,
                   topLeft     : isSideSafe.topLeft     || safePosition,
                   topRight    : isSideSafe.topRight    || safePosition,
-                  bottomLeft  : isSideSafe.bottomLeft  || safePosition, 
+                  bottomLeft  : isSideSafe.bottomLeft  || safePosition,
                   bottomRight : isSideSafe.bottomRight || safePosition,
                 }
 
@@ -179,7 +177,7 @@ const getPathMap = app => (
       ))
 
     /**
-     * Convert array to object, name of each node will be {x}|{y} 
+     * Convert array to object, name of each node will be {x}|{y}
      * Also prepare for A* by adding neigbours for each node
      */
     const map = nodes.reduce((nodes, node) => {
@@ -190,9 +188,9 @@ const getPathMap = app => (
         owner       : false,
         distance    : false,
       }
-      return nodes 
+      return nodes
     }, {})
-    
+
     for( const key in map ) {
 
       const node = map[ key ].coordinates
@@ -210,12 +208,10 @@ const getPathMap = app => (
       potentialNeighbors.forEach(
         neighborKey => {
           if( ! map[ neighborKey ] ) return;
-          map[ key ].neighbors[ neighborKey ] = map[ neighborKey ] 
+          map[ key ].neighbors[ neighborKey ] = map[ neighborKey ]
         }
       )
     }
-
-    app.loading.set(`path-map: ${app.map.current.name}`, true)
 
     return map
   })

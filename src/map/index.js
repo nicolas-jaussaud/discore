@@ -15,7 +15,7 @@ const load = (app, name, squares, initialSquare) => {
 
   const character = app.characters.getMain()
   app.loading.set('map', false)
-  
+
   if( app.map.current ) {
     app.map.current.unload()
   }
@@ -24,11 +24,18 @@ const load = (app, name, squares, initialSquare) => {
     character.actions.currentAction = false
   }
 
-  const isLoaded = () => {
+  const isLoaded = async () => {
+
+    /**
+     * We need to wait for all objects to be loaded before being able to
+     * generate an accurate path map
+     */
+    await Promise.all(app.world.promises)
+
     app.map.moveCharacterOnSquare(initialSquare, character)
     app.hooks.doAction('mapLoaded', {
-      name : name, 
-      map  : app.map.maps[name] 
+      name : name,
+      map  : app.map.maps[name]
     })
     app.loading.set('map', true)
   }
@@ -37,12 +44,12 @@ const load = (app, name, squares, initialSquare) => {
     app.map.maps[name].load()
     app.map.current = app.map.maps[name]
     isLoaded()
-    return; 
+    return;
   }
-  
+
   const map = createMap(app, name, squares)
   map.load()
-  
+
   app.map = {
     ...app.map,
     current: map,
@@ -53,7 +60,7 @@ const load = (app, name, squares, initialSquare) => {
     getSquareByCoordinates: coordinates => getSquareByCoordinates(app, coordinates),
     getSquareType: type => getSquareType(app, type)
   }
-  
+
   isLoaded()
 }
 

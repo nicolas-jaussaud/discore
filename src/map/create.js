@@ -19,23 +19,23 @@ const createMap = (app, name, squares) => {
   }
 
   map.unload = () => unloadMap(app, map)
-  
+
   map.generateSquares = () => {
     for( const key in squares ) {
 
       const coordinates = key.split('|')
       const squareType = app.map.squareTypes[ squares[key].type ]
-      const squareSize = app.map.squareSize    
+      const squareSize = app.map.squareSize
 
       squareType.render({
         scene: map.scene,
         coordinates: {
           x: [
-            parseInt(coordinates[0]) * squareSize - (squareSize / 2), 
+            parseInt(coordinates[0]) * squareSize - (squareSize / 2),
             parseInt(coordinates[0]) * squareSize + (squareSize / 2)
           ],
           y: [
-            parseInt(coordinates[1]) * squareSize - (squareSize / 2), 
+            parseInt(coordinates[1]) * squareSize - (squareSize / 2),
             parseInt(coordinates[1]) * squareSize + (squareSize / 2)
           ]
         },
@@ -54,7 +54,7 @@ const createMap = (app, name, squares) => {
 const unloadMap = (app, map) => {
 
   map.objects.forEach(object => app.world.remove(object))
-  
+
   const characters = app.characters.getAll()
   for( const name in characters ) {
 
@@ -66,7 +66,7 @@ const unloadMap = (app, map) => {
   }
 
   delete map.objects
-  map.scene = false   
+  map.scene = false
   app.world.instance.reset()
 }
 

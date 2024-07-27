@@ -13,14 +13,14 @@ More information about how to use `app.world` in the [import objects guide](./pa
 
 #### List
 
-##### **app.world.add** 
-- Type: _function_ 
+##### **app.world.add**
+- Type: _function_
 
-##### **app.world.hasCollisions** 
-- Type: _function_ 
+##### **app.world.hasCollisions**
+- Type: _function_
 
-##### **app.world.cache** 
-- Type: _object_ 
+##### **app.world.cache**
+- Type: _object_
 
 `app.world.cache` is used to easily store the data associated to a given callback.
 
@@ -38,19 +38,22 @@ const plane = app.world.cache.get(
 )
 ```
 
-##### **app.world.instance** 
-- Type: _object_ 
+A cached resource can be deleted using `app.world.cache.delete`:
+```javascript
+app.world.cache.delete('material-name')
+```
+
+##### **app.world.instance**
+- Type: _object_
 
 `app.world.instance` is an helper to generate InstancedMesh (see [threeJS documentation](https://threejs.org/docs/#api/en/objects/InstancedMesh)).
 
 We can add instances of a mesh using the following syntax:
 ```javascript
-app.world.instance.add('instance-name', geometry, material, { 
+app.world.instance.add('instance-name', geometry, material, {
   position: { x: 0, y: 0, z: 0 },
   rotation: { x: 0, y: 0, z: 0 },
   before: instancedMesh => {},
   after: instancedMesh => {}
 })
 ```
-
-
