@@ -14,7 +14,7 @@ const init = (app, element) => {
 
   loadingElement.appendChild(list.element)
   loadingElement.appendChild(loadingButton)
-  
+
   Object.assign(
     list.element.style, 
     style.list
@@ -41,51 +41,51 @@ const init = (app, element) => {
   }
 }
 
-const setStatus = ({ loading }, name, status = true) => {
+const setStatus = (app, name, status = true) => {
 
   if( status === false ) {
-    loading.elements.container.childNodes[0].nodeValue = 'Loading...'
+    app.loading.elements.container.childNodes[0].nodeValue = 'Loading...'
     Object.assign(
-      loading.elements.container.style,
+      app.loading.elements.container.style,
       style.container
     )
   }
-  
-  loading.list.update(name, status)
 
-  if( loading.list.isLoaded() ) stopLoading(loading)
+  app.loading.list.update(name, status)
+
+  if( app.loading.list.isLoaded() ) stopLoading(app)
 }
 
-const stopLoading = (loading) => {
+const stopLoading = app => {
 
   const removeLoadingScreen = () => {
     Object.assign(
-      loading.elements.container.style, 
+      app.loading.elements.container.style,
       { display: 'none' }
     )
-    loading.list.clear()
+    app.loading.list.clear()
     app.hooks.doAction('loadComplete')
   }
 
-  if( loading.firstInit !== true ) {
+  if( app.loading.firstInit !== true ) {
     removeLoadingScreen()
     return;
   }
-    
-  loading.elements.button.removeAttribute('disabled')
-  loading.elements.container.childNodes[0].nodeValue = 'Ready!'
-  
+
+  app.loading.elements.button.removeAttribute('disabled')
+  app.loading.elements.container.childNodes[0].nodeValue = 'Ready!'
+
   Object.assign(
-    loading.elements.button.style, 
+    app.loading.elements.button.style,
     { 
       ...style.button, 
       ...style.buttonReady 
     }
   )
-  
-  loading.elements.button.addEventListener('click', event => {
-    loading.firstInit = false
-    loading.elements.button.remove()
+
+  app.loading.elements.button.addEventListener('click', event => {
+    app.loading.firstInit = false
+    app.loading.elements.button.remove()
     removeLoadingScreen()
     event.stopPropagation()
   })
