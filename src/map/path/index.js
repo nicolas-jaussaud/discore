@@ -32,11 +32,11 @@ const searchPath = (app, currentPosition, targetPosition) => {
   gScore[ startNode.key ] = 0
 
   const fScore = {}
-  fScore[ startNode.key ] = startNode.distance = getDistance(startNode, targetNode)
+  fScore[ startNode.key ] = getDistance(startNode, targetNode)
 
   while( openList.length > 0 ) {
 
-    const current = getLowestF(openList)
+    const current = getLowestF(openList, fScore)
 
     if( current.node.key === targetNode.key ) {
       return getPath(
@@ -49,7 +49,7 @@ const searchPath = (app, currentPosition, targetPosition) => {
     }
 
     openList.splice(current.index, 1)
-    
+
     for( const neighborKey in current.node.neighbors ) {
 
       const neighbor = current.node.neighbors[ neighborKey ]
@@ -66,7 +66,7 @@ const searchPath = (app, currentPosition, targetPosition) => {
 
       const listHasNeighbor = openList.some(node => node.key === neighbor.key)
       if( ! listHasNeighbor ) openList.push(neighbor)
-    }    
+    }
   }
 
   return [
@@ -134,10 +134,10 @@ const getPath = (
   })
 }
 
-const getLowestF = list => (
+const getLowestF = (list, fScore) => (
   list.reduce(
-    (lowF, node, index) => ( 
-      node.distance < lowF.node.distance 
+    (lowF, node, index) => (
+      fScore[ node.key ] < fScore[ lowF.node.key ]
         ? { index, node }
         : lowF
     ),

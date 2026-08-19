@@ -184,9 +184,7 @@ const getPathMap = app => (
       nodes[`${node.x}|${node.y}`] = {
         key         : `${node.x}|${node.y}`,
         coordinates : node,
-        neighbors   : {},
-        owner       : false,
-        distance    : false,
+        neighbors   : {}
       }
       return nodes
     }, {})
